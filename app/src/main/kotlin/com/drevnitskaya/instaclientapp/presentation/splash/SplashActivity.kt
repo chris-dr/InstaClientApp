@@ -8,6 +8,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Thread.sleep(3000)
         startActivity(LoginActivity.getStartIntent(this))
         finish()
     }
