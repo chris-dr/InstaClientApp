@@ -4,4 +4,8 @@ import android.app.Application
 
 class InstaClientApp : Application() {
 
+    override fun onCreate() {
+        super.onCreate()
+    }
+
 }

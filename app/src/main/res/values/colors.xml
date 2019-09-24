@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">@color/citrineWhite</color>
+    <color name="colorPrimaryDark">@color/blueBell</color>
+    <color name="colorAccent">@color/jaggedIce</color>
+
+
+    <color name="jaggedIce">#C6EDE6</color>
+    <color name="jaggedIce45Percent">#73C6EDE6</color>
+    <color name="blueBell">#8A8DCE</color>
+    <color name="citrineWhite">#FDFDEF</color>
+
+    <color name="doveGray">#666666</color>
+    <color name="celery">#96CB5D</color>
 </resources>
