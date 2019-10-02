@@ -10,9 +10,12 @@
     <color name="blueBell">#8A8DCE</color>
     <color name="blueBell50Percent">#808A8DCE</color>
     <color name="citrineWhite">#FDFDEF</color>
+    <color name="citrineWhite85Percent">#D9FDFDEF</color>
 
     <color name="doveGray">#666666</color>
     <color name="celery">#96CB5D</color>
     <color name="cornflowerBlue">#6195ED</color>
     <color name="mariner">#2068BA</color>
+    <color name="white40Percent">#66ffffff</color>
+    <color name="sirocco">#6F7D7A</color>
 </resources>

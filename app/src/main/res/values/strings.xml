@@ -2,6 +2,8 @@
     <string name="app_name">InstaClientApp</string>
     <string name="login_emailHint">Email</string>
     <string name="login_passwordHint">Password</string>
-    <string name="login_button">Log In</string>
+    <string name="login_button">Insta Log In</string>
     <string name="login_title">Log In</string>
+    <string name="login_mainDescription">Instagram client\nsample application by Chris</string>
+    <string name="login_secondaryDescription">To continue please authorize via your\nInstagram profile</string>
 </resources>
