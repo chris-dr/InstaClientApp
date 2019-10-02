@@ -1,6 +1,5 @@
 package com.drevnitskaya.instaclientapp.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -57,10 +56,9 @@ class LoginWebViewModel(
 
     private suspend fun getToken(authCode: String?) {
         authCode?.let { code ->
-            when (val tokenResult = getAccessTokenUseCase.execute(code)) {
-                is UseCaseResult.Success -> {
-                    val token = tokenResult.data
-                    Log.d(javaClass.simpleName, "Token is: $token")
+            when (getAccessTokenUseCase.execute(code)) {
+                is UseCaseResult.Complete -> {
+                    //TODO: Open profile screen
                 }
                 is UseCaseResult.Error -> {
                     TODO("Handle error")

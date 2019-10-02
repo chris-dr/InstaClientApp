@@ -2,7 +2,6 @@ package com.drevnitskaya.instaclientapp.framework.api
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 
@@ -17,9 +16,9 @@ class BaseRetrofitClientFactory(
         return Retrofit.Builder()
             .addConverterFactory(converterFactory)
             .client(baseOkHttpClientBuilder.apply {
-                val logging = HttpLoggingInterceptor()
-                logging.level = HttpLoggingInterceptor.Level.BODY
-                addInterceptor(logging)
+                interceptors?.forEach {
+                    addInterceptor(it)
+                }
             }.build())
             .baseUrl(baseUrl)
             .build()

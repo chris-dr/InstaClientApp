@@ -1,11 +1,9 @@
-package com.drevnitskaya.instaclientapp.data.remote.api
+package com.drevnitskaya.instaclientapp.data.remote.api.auth
 
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import com.drevnitskaya.instaclientapp.data.remote.api.auth.entities.TokenResponse
+import retrofit2.http.*
 
-interface InstaApiInterface {
+interface AuthApiInterface {
 
     @Headers("Accept: application/json")
     @FormUrlEncoded

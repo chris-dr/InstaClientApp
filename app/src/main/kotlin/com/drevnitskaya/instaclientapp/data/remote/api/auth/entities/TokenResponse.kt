@@ -1,4 +1,4 @@
-package com.drevnitskaya.instaclientapp.data.remote.api
+package com.drevnitskaya.instaclientapp.data.remote.api.auth.entities
 
 import com.google.gson.annotations.SerializedName
 

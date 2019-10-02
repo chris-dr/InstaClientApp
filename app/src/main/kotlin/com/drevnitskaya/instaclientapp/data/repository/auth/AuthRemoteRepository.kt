@@ -1,17 +1,17 @@
-package com.drevnitskaya.instaclientapp.data.repository
+package com.drevnitskaya.instaclientapp.data.repository.auth
 
 import com.drevnitskaya.instaclientapp.BuildConfig
-import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
-import com.drevnitskaya.instaclientapp.data.remote.api.TokenResponse
+import com.drevnitskaya.instaclientapp.data.remote.api.auth.AuthApiInterface
+import com.drevnitskaya.instaclientapp.data.remote.api.auth.entities.TokenResponse
 import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
 
-interface UserRepository {
+interface AuthRemoteRepository {
     suspend fun getAccessToken(authCode: String): TokenResponse
 }
 
-class UserRepositoryImpl(
-    private val remoteDataSource: InstaApiInterface
-) : UserRepository {
+class AuthRemoteRepositoryImpl(
+    private val remoteDataSource: AuthApiInterface
+) : AuthRemoteRepository {
 
     override suspend fun getAccessToken(authCode: String): TokenResponse {
         return remoteDataSource.getAccessToken(
