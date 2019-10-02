@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.updatePadding
 import com.drevnitskaya.instaclientapp.R
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -20,20 +21,25 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        loginRoot.systemUiVisibility =
-            SYSTEM_UI_FLAG_LAYOUT_STABLE or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        ViewCompat.setOnApplyWindowInsetsListener(loginRoot) { _, insets ->
-            insets
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(loginBackgroundImg) { _, insets ->
-            insets
-        }
-
-
-
         initViews()
     }
 
     private fun initViews() {
+        loginRoot.systemUiVisibility =
+            SYSTEM_UI_FLAG_LAYOUT_STABLE or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        loginRoot.setOnApplyWindowInsetsListener { _, windowInsets ->
+            windowInsets
+        }
+        loginBackgroundImg.setOnApplyWindowInsetsListener { _, windowInsets ->
+            windowInsets
+        }
+        loginForm.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.updatePadding(bottom = windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
+
+        loginButton.setOnClickListener {
+            startActivity(LoginWebActivity.getStartIntent(this))
+        }
     }
 }

@@ -12,24 +12,18 @@
     </style>
 
     <style name="LoginTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:navigationBarColor">#80FFFFFF</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
     </style>
 
-    <style name="InstaAuthTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@color/cornflowerBlue</item>
-        <item name="colorPrimaryDark">@color/mariner</item>
+    <!--    <item name="android:navigationBarColor">#80FFFFFF</item>-->
+
+    <style name="AuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/jaggedIce</item>
+        <item name="colorPrimaryDark">#26000000</item>
         <item name="android:windowBackground">@android:color/white</item>
-    </style>
-
-    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/HintText</item>
-        <item name="android:paddingBottom">8dp</item>
-    </style>
-
-    <style name="HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">@color/doveGray</item>
+        <item name="colorControlNormal">@color/sirocco</item>
     </style>
 
 </resources>

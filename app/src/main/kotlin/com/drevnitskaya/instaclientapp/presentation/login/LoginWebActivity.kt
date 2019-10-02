@@ -50,7 +50,7 @@ class LoginWebActivity : AppCompatActivity() {
             loginWebView.loadUrl(url)
         })
         viewModel.showLoginForm.observe(this, Observer { shouldShow ->
-            TransitionManager.beginDelayedTransition(loginRoot)
+            TransitionManager.beginDelayedTransition(webLoginRoot)
             loginWebView.visibility = if (shouldShow) View.VISIBLE else View.GONE
         })
         //todo: maybe not here
@@ -68,6 +68,7 @@ class LoginWebActivity : AppCompatActivity() {
             setTitle(R.string.login_title)
         }
         loginToolbar.setNavigationOnClickListener { onBackPressed() }
+
         loginWebView.settings.apply {
             javaScriptEnabled = true
         }

@@ -67,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginButton"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="160dp"
             android:layout_height="wrap_content"

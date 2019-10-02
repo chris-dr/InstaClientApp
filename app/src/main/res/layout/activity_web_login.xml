@@ -2,10 +2,10 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loginRoot"
+    android:id="@+id/webLoginRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:theme="@style/InstaAuthTheme">
+    tools:theme="@style/AuthTheme">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/loginAppBar"
@@ -15,7 +15,9 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/loginToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:titleTextColor="@color/sirocco" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
