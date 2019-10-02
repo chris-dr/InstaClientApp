@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.drevnitskaya.instaclientapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.InstaClientApp"
         android:icon="@mipmap/ic_launcher"
@@ -25,6 +27,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.login.LoginWebActivity"
             android:screenOrientation="portrait" />
     </application>
 

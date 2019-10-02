@@ -12,6 +12,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def instaProperties = rootProject.ext.instaProperties
+        buildConfigField("String", "INSTA_CLIENT_ID", "\"${instaProperties['client_id']}\"")
     }
     buildTypes {
         release {

@@ -24,3 +24,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    def instaPropertiesFile = file("insta_client.properties")
+    instaProperties = new Properties()
+    instaProperties.load(new FileInputStream(instaPropertiesFile))
+}

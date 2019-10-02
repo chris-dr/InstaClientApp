@@ -12,3 +12,4 @@
 /captures
 .externalNativeBuild
 .cxx
+/insta_client.properties
