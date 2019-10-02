@@ -4,6 +4,7 @@ import android.app.Application
 import com.drevnitskaya.instaclientapp.BuildConfig
 import com.drevnitskaya.instaclientapp.di.appModule
 import com.drevnitskaya.instaclientapp.di.loginModule
+import com.drevnitskaya.instaclientapp.di.profileModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -27,7 +28,7 @@ class InstaClientApp : Application() {
     }
 
     private fun getKoinModules(): List<Module> {
-        return listOf(appModule, loginModule)
+        return listOf(appModule, loginModule, profileModule)
     }
 
 }

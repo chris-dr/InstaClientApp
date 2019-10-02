@@ -8,6 +8,7 @@ import com.drevnitskaya.instaclientapp.domain.auth.ComposeAuthUrlUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.GetAccessTokenUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.ParseAuthCodeUseCase
 import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
+import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class LoginWebViewModel(
@@ -18,6 +19,8 @@ class LoginWebViewModel(
     val showProgress = MutableLiveData<Boolean>()
     val loadLoginForm = MutableLiveData<String>()
     val showLoginForm = MutableLiveData<Boolean>()
+    //todo: not here
+    val openProfile = SingleLiveEvent<Unit>()
     private var redirectUrl: String? = null
 
     init {
@@ -59,6 +62,7 @@ class LoginWebViewModel(
             when (getAccessTokenUseCase.execute(code)) {
                 is UseCaseResult.Complete -> {
                     //TODO: Open profile screen
+                    openProfile.call()
                 }
                 is UseCaseResult.Error -> {
                     TODO("Handle error")

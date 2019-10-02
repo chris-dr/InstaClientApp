@@ -32,6 +32,9 @@
             android:name=".presentation.login.LoginWebActivity"
             android:screenOrientation="portrait"
             android:theme="@style/InstaAuthTheme" />
+        <activity
+            android:name=".presentation.profile.ProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

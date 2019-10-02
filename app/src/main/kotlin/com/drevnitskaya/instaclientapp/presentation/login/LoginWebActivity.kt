@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.drevnitskaya.instaclientapp.R
 import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
+import com.drevnitskaya.instaclientapp.presentation.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_web_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -51,6 +52,11 @@ class LoginWebActivity : AppCompatActivity() {
         viewModel.showLoginForm.observe(this, Observer { shouldShow ->
             TransitionManager.beginDelayedTransition(loginRoot)
             loginWebView.visibility = if (shouldShow) View.VISIBLE else View.GONE
+        })
+        //todo: maybe not here
+        viewModel.openProfile.observe(this, Observer {
+            startActivity(ProfileActivity.getStartIntent(this))
+            finish()
         })
     }
 

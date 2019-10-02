@@ -10,7 +10,7 @@ data class Profile(
     @SerializedName("profile_picture")
     var profilePictureUrl: String? = null,
     var bio: String? = null,
-    var count: Count? = null
+    var counts: Count? = null
 )
 
 data class Count(

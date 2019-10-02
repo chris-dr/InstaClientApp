@@ -1,9 +1,9 @@
-package com.drevnitskaya.instaclientapp.data.remote.api.auth
+package com.drevnitskaya.instaclientapp.data.remote.api
 
 import com.drevnitskaya.instaclientapp.data.remote.api.auth.entities.TokenResponse
 import retrofit2.http.*
 
-interface AuthApiInterface {
+interface InstaApiInterface {
 
     @Headers("Accept: application/json")
     @FormUrlEncoded
@@ -15,4 +15,8 @@ interface AuthApiInterface {
         @Field("redirect_uri") redirectUri: String,
         @Field("code") code: String
     ): TokenResponse
+
+
+    @GET("v1/users/self/")
+    suspend fun getProfile(@Query("access_token") token: String): DataResponse<Profile>
 }
