@@ -3,4 +3,5 @@
     <string name="login_emailHint">Email</string>
     <string name="login_passwordHint">Password</string>
     <string name="login_button">Log In</string>
+    <string name="login_title">Log In</string>
 </resources>

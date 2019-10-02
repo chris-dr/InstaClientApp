@@ -33,6 +33,14 @@ class LoginWebActivity : AppCompatActivity() {
         initViews()
     }
 
+    override fun onBackPressed() {
+        if (loginWebView.canGoBack()) {
+            loginWebView.goBack()
+            return
+        }
+        super.onBackPressed()
+    }
+
     private fun initViewModel() {
         viewModel.showProgress.observe(this, Observer { shouldShow ->
             loginProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
@@ -48,6 +56,12 @@ class LoginWebActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initViews() {
+        setSupportActionBar(loginToolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setTitle(R.string.login_title)
+        }
+        loginToolbar.setNavigationOnClickListener { onBackPressed() }
         loginWebView.settings.apply {
             javaScriptEnabled = true
         }

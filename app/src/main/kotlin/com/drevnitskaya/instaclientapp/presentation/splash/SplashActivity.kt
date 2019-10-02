@@ -2,7 +2,7 @@ package com.drevnitskaya.instaclientapp.presentation.splash
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.drevnitskaya.instaclientapp.presentation.MainActivity
+import com.drevnitskaya.instaclientapp.presentation.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 

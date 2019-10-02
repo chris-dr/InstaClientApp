@@ -1,4 +1,4 @@
-package com.drevnitskaya.instaclientapp.presentation
+package com.drevnitskaya.instaclientapp.presentation.main
 
 import android.content.Context
 import android.content.Intent
@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initViews()
+    }
+
+    private fun initViews() {
         login.setOnClickListener {
             startActivity(LoginWebActivity.getStartIntent(this))
         }

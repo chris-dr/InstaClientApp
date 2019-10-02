@@ -11,6 +11,12 @@
         <item name="colorPrimaryDark">@android:color/white</item>
     </style>
 
+    <style name="InstaAuthTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/cornflowerBlue</item>
+        <item name="colorPrimaryDark">@color/mariner</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/HintText</item>
         <item name="android:paddingBottom">8dp</item>

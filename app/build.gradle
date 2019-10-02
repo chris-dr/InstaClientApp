@@ -15,6 +15,7 @@ android {
 
         def instaProperties = rootProject.ext.instaProperties
         buildConfigField("String", "INSTA_CLIENT_ID", "\"${instaProperties['client_id']}\"")
+        buildConfigField("String", "INSTA_CLIENT_SECRET", "\"${instaProperties['client_secret']}\"")
     }
     buildTypes {
         release {
@@ -39,6 +40,9 @@ dependencies {
     implementation ext.support.constraint
 
     implementation ext.ktx
+
+    implementation arch
+    implementation arch_viewmodel_ktx
 
     implementation ext.koin
     implementation ext.koin_viewmodel

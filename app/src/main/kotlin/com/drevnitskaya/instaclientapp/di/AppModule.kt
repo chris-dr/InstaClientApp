@@ -3,6 +3,8 @@ package com.drevnitskaya.instaclientapp.di
 import com.drevnitskaya.instaclientapp.framework.api.BaseOkHttpClientBuilder
 import com.drevnitskaya.instaclientapp.framework.api.BaseRetrofitClientFactory
 import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
+import com.drevnitskaya.instaclientapp.data.repository.UserRepository
+import com.drevnitskaya.instaclientapp.data.repository.UserRepositoryImpl
 import com.drevnitskaya.instaclientapp.framework.api.INSTA_BASE_URL
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -26,5 +28,9 @@ val appModule = module {
             converterFactory = get(),
             baseUrl = get(named(DI_NAME_BASE_URL))
         ).build()
+    }
+
+    factory<UserRepository> {
+        UserRepositoryImpl(remoteDataSource = get())
     }
 }
