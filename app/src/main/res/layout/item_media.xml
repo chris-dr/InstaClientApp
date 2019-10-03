@@ -31,33 +31,32 @@
             android:layout_height="12dp"
             android:layout_marginStart="6dp"
             android:layout_marginTop="12dp"
-            android:tint="@color/doveGray"
+            android:tint="@color/woodyBrown"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/itemMediaImage"
             app:srcCompat="@drawable/ic_favourite" />
 
         <TextView
             android:id="@+id/itemMediaLikesLabel"
+            style="@style/Caption.WoodyBrown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/doveGray"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/rubik_medium"
             app:layout_constraintBottom_toBottomOf="@+id/itemMediaLikesImg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/itemMediaLikesImg"
             app:layout_constraintTop_toTopOf="@+id/itemMediaLikesImg"
             tools:ignore="SmallSp"
-            tools:text="10 people like this" />
+            tools:text="10 people like this 10 people like this 10 people like this 10 people like this" />
 
         <TextView
             android:id="@+id/itemMediaLocationLabel"
+            style="@style/Caption.WoodyBrown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/itemMediaLikesLabel"
             app:layout_constraintTop_toBottomOf="@+id/itemMediaLikesLabel"

@@ -45,7 +45,7 @@
             android:gravity="center"
             android:lineSpacingExtra="6sp"
             android:text="@string/login_mainDescription"
-            android:textColor="@color/sirocco"
+            android:textColor="@color/woodyBrown"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
             android:gravity="center"
             android:lineSpacingExtra="6sp"
             android:text="@string/login_secondaryDescription"
-            android:textColor="@color/sirocco"
+            android:textColor="@color/woodyBrown"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/header"
             app:layout_constraintStart_toStartOf="@+id/header"
@@ -73,17 +73,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="36dp"
-            android:backgroundTint="@color/jaggedIce"
+            android:backgroundTint="@color/watusi"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:text="@string/login_button"
-            android:textColor="@color/sirocco"
+            android:textColor="@color/woodyBrown"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header2" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

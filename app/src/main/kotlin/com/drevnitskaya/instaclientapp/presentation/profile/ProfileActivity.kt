@@ -46,18 +46,24 @@ class ProfileActivity : AppCompatActivity() {
         })
         viewModel.showUserInfo.observe(this, Observer { profile ->
             TransitionManager.beginDelayedTransition(profileRoot)
-            profileContent.visibility = profile?.let {
-                profileImage.loadImage(it.profilePictureUrl)
+            val visibility = profile?.let {
+                profileImage.loadImage(null, it.profilePictureUrl)
                 profileFullName.text = it.fullName
                 profileBio.text = it.bio
                 profileFollowersCount.text = "${it.counts?.follows ?: 0}"
                 profileFollowingCount.text = "${it.counts?.followedBy ?: 0}"
                 View.VISIBLE
             } ?: View.GONE
+            setProfileContentVisibility(visibility)
         })
         viewModel.showFeed.observe(this, Observer { feed ->
             adapterMedia.media = feed
         })
+    }
+
+    private fun setProfileContentVisibility(visibility: Int) {
+        profileAppBar.visibility = visibility
+        profileFeed.visibility = visibility
     }
 
 }

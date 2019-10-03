@@ -1,8 +1,10 @@
 package com.drevnitskaya.instaclientapp.presentation.profile
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drevnitskaya.instaclientapp.R
 import com.drevnitskaya.instaclientapp.data.remote.api.InstaMedia
@@ -29,9 +31,17 @@ class MediaAdapter : RecyclerView.Adapter<MediaAdapter.MediaHolder>() {
     }
 
     inner class MediaHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val placeholder = ContextCompat.getDrawable(
+            itemView.context,
+            R.drawable.ic_image_placeholder
+        )
+
+        init {
+            placeholder?.setTint(ContextCompat.getColor(itemView.context, R.color.bridesmaid))
+        }
 
         fun bind(item: InstaMedia) = with(itemView) {
-            itemMediaImage.loadImage(item.images?.standardResolutionImg?.url)
+            itemMediaImage.loadImage(placeholder, item.images?.standardResolutionImg?.url)
             itemMediaLikesLabel.text = context.getString(
                 R.string.itemMedia_likesCountLabel,
                 item.likes?.count ?: 0

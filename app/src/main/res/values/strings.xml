@@ -8,5 +8,5 @@
     <string name="login_secondaryDescription">To continue please authorize via your\nInstagram profile</string>
     <string name="profile_followingLabel">following</string>
     <string name="profile_followersLabel">followers</string>
-    <string name="itemMedia_likesCountLabel">%d people like this post</string>
+    <string name="itemMedia_likesCountLabel">%d people like this</string>
 </resources>

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profileRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:theme="@style/ProfileTheme">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/profileContent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/profileAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profileUserInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F5F1EC"
+            android:background="@color/watusi"
             android:padding="16dp"
             app:layout_constraintBottom_toTopOf="@+id/profileFeed"
             app:layout_constraintTop_toTopOf="parent">
@@ -30,40 +30,38 @@
                 app:layout_constraintBottom_toBottomOf="@+id/profileFollowersLabel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/profileFullName"
+                app:riv_border_color="@color/bridesmaid"
+                app:riv_border_width="2dp"
                 app:riv_oval="true" />
 
             <TextView
                 android:id="@+id/profileFullName"
-                android:layout_width="wrap_content"
+                style="@style/H6.WoodyBrownText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/doveGray"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profileImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Christina Drevnitskaya" />
 
             <TextView
                 android:id="@+id/profileBio"
+                style="@style/Body2.WoodyBrown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/profileFullName"
                 app:layout_constraintTop_toBottomOf="@+id/profileFullName"
                 tools:text="Some Bio here" />
 
             <TextView
                 android:id="@+id/profileFollowersCount"
+                style="@style/Subtitle1.WoodyBrownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/doveGray"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/profileFollowersLabel"
                 app:layout_constraintStart_toStartOf="@+id/profileFollowersLabel"
                 app:layout_constraintTop_toBottomOf="@+id/profileBio"
@@ -71,21 +69,18 @@
 
             <TextView
                 android:id="@+id/profileFollowersLabel"
+                style="@style/Body2.WoodyBrown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_followersLabel"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/profileBio"
                 app:layout_constraintTop_toBottomOf="@+id/profileFollowersCount" />
 
             <TextView
                 android:id="@+id/profileFollowingCount"
+                style="@style/Subtitle1.WoodyBrownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/doveGray"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/profileFollowingLabel"
                 app:layout_constraintStart_toStartOf="@+id/profileFollowingLabel"
                 app:layout_constraintTop_toTopOf="@+id/profileFollowersCount"
@@ -93,31 +88,32 @@
 
             <TextView
                 android:id="@+id/profileFollowingLabel"
+                style="@style/Body2.WoodyBrown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="@string/profile_followingLabel"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/profileFollowersLabel"
                 app:layout_constraintTop_toBottomOf="@+id/profileFollowingCount" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profileFeed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:padding="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileUserInfo" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profileFeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/soapstone"
+        android:clipToPadding="false"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     <ProgressBar
         android:id="@+id/profileProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
-</FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

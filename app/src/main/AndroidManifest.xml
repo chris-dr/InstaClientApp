@@ -31,11 +31,15 @@
         <activity
             android:name=".presentation.login.LoginWebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AuthTheme" />
+            android:theme="@style/ProfileTheme" />
         <activity
             android:name=".presentation.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ProfileTheme" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
