@@ -57,8 +57,7 @@ val appModule = module {
         )
     }
 
-    //todo: it's single for now!
-    single<AuthLocalRepository> {
+    factory<AuthLocalRepository> {
         AuthLocalRepositoryImpl(
             localDataSource = get()
         )

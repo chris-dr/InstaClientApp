@@ -34,7 +34,8 @@
             android:theme="@style/AuthTheme" />
         <activity
             android:name=".presentation.profile.ProfileActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ProfileTheme" />
     </application>
 
 </manifest>

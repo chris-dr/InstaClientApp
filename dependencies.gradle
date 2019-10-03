@@ -37,4 +37,6 @@ ext {
     ktx = 'androidx.core:core-ktx:1.1.0'
 
     coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+
+    rounded_imageview = 'com.makeramen:roundedimageview:2.3.0'
 }

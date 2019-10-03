@@ -17,13 +17,18 @@
         <item name="colorPrimaryDark">@android:color/transparent</item>
     </style>
 
-    <!--    <item name="android:navigationBarColor">#80FFFFFF</item>-->
-
     <style name="AuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/jaggedIce</item>
         <item name="colorPrimaryDark">#26000000</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="colorControlNormal">@color/sirocco</item>
+    </style>
+
+    <style name="ProfileTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="colorPrimaryDark">#F5F1EC</item>
+        <item name="colorPrimary">@color/jaggedIce</item>
     </style>
 
 </resources>

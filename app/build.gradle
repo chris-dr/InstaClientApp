@@ -13,6 +13,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        vectorDrawables.useSupportLibrary = true
+
         def instaProperties = rootProject.ext.instaProperties
         buildConfigField("String", "INSTA_CLIENT_ID", "\"${instaProperties['client_id']}\"")
         buildConfigField("String", "INSTA_CLIENT_SECRET", "\"${instaProperties['client_secret']}\"")
@@ -54,6 +56,7 @@ dependencies {
 
     implementation ext.glide
     kapt ext.glide_kapt
+    implementation rounded_imageview
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

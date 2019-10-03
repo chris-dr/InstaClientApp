@@ -1,7 +1,6 @@
 package com.drevnitskaya.instaclientapp.data.repository.auth
 
 import com.drevnitskaya.instaclientapp.data.local.PreferenceProvider
-import kotlin.properties.Delegates
 
 private const val PREF_KEY_ACCESS_TOKEN = "insta_client.access_token"
 
@@ -12,8 +11,7 @@ interface AuthLocalRepository {
 class AuthLocalRepositoryImpl(
     private val localDataSource: PreferenceProvider
 ) : AuthLocalRepository {
-    override var token: String by Delegates.observable("") { _, _, newValue ->
-        localDataSource.setPreference(PREF_KEY_ACCESS_TOKEN, newValue)
-    }
-
+    override var token: String
+        set(value) = localDataSource.setPreference(PREF_KEY_ACCESS_TOKEN, value)
+        get() = localDataSource.getPreference(PREF_KEY_ACCESS_TOKEN, "")
 }

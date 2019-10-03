@@ -14,6 +14,7 @@ class GetProfileUseCaseImpl(
     override suspend fun execute(): UseCaseResult<Profile> {
         return try {
             val profile = profileRepository.getProfile().data
+            //TODO: Save it locally
             UseCaseResult.Success(profile)
         } catch (ex: Exception) {
             UseCaseResult.Error(ex)

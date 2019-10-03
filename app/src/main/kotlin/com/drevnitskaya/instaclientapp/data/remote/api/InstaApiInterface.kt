@@ -19,4 +19,12 @@ interface InstaApiInterface {
 
     @GET("v1/users/self/")
     suspend fun getProfile(@Query("access_token") token: String): DataResponse<Profile>
+
+    @GET("v1/users/self/media/recent/")
+    suspend fun getMedia(
+        @Query("access_token") token: String,
+        @Query("max_id") maxId: Int,
+        @Query("min_id") minId: Int,
+        @Query("count") count: Int
+    ): DataResponse<List<InstaMedia>>
 }
