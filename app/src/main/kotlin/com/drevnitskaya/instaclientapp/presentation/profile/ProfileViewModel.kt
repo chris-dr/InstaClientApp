@@ -23,6 +23,7 @@ class ProfileViewModel(
     val showFeed = MutableLiveData<List<FeedItem>>()
     val openLogin = SingleLiveEvent<Nothing>()
     val showLogoutFailed = SingleLiveEvent<Nothing>()
+    val showErrorState = MutableLiveData<Boolean>()
 
     init {
         viewModelScope.launch {
@@ -31,39 +32,28 @@ class ProfileViewModel(
             val feedAsync = async { getFeedUseCase.execute() }
 
             val profileResult = profileAsync.await()
-            val mediaResult = feedAsync.await()
+            val feedResult = feedAsync.await()
 
-            when (profileResult) {
-                is UseCaseResult.Success -> {
-                    val profile = profileResult.data
-                    showProgress.value = false
-                    showUserInfo.value = profile
-                }
-                is UseCaseResult.Error -> {
-                    //TODO: Handle Error!
-                    profileResult.exception.printStackTrace()
-                    showProgress.value = false
-                }
-            }
-            when (mediaResult) {
-                is UseCaseResult.Success -> {
-                    val instaMedia = mediaResult.data
-                    showFeed.value = instaMedia
-                }
-                is UseCaseResult.Error -> {
-                    mediaResult.exception.printStackTrace()
-                }
+            if (profileResult is UseCaseResult.Success && feedResult is UseCaseResult.Success) {
+                val profile = profileResult.data
+                val feed = feedResult.data
+                showProgress.value = false
+                showUserInfo.value = profile
+                //todo: handle feed, can be empty!
+                showFeed.value = feed
+            } else {
+                showProgress.value = false
+                showErrorState.value = true
             }
         }
     }
 
     fun logout() {
         viewModelScope.launch {
-            showLogoutFailed.call()
-//            when (logoutUseCase.execute()) {
-//                is UseCaseResult.Complete -> openLogin.call()
-//                is UseCaseResult.Error -> showLogoutFailed.call()
-//            }
+            when (logoutUseCase.execute()) {
+                is UseCaseResult.Complete -> openLogin.call()
+                is UseCaseResult.Error -> showLogoutFailed.call()
+            }
         }
     }
 }

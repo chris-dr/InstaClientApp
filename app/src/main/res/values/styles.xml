@@ -40,6 +40,13 @@
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
+    <style name="Button.WoodyBrownText.Watusi">
+        <item name="cornerRadius">20dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="backgroundTint">@color/watusi</item>
+    </style>
+
     <style name="H5">
         <item name="android:fontFamily">@font/rubik_medium</item>
         <item name="android:textSize">24sp</item>
@@ -65,7 +72,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Button" parent="android:TextAppearance">
+    <style name="Button" parent="android:TextAppearance.Material.Button">
         <item name="android:fontFamily">@font/rubik_medium</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -75,31 +82,31 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="H5.WoodyBrown">
+    <style name="H5.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
-    <style name="H6.WoodyBrown">
+    <style name="H6.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
-    <style name="Subtitle1.WoodyBrown">
+    <style name="Subtitle1.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
-    <style name="Body1.WoodyBrown">
+    <style name="Body1.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
-    <style name="Body2.WoodyBrown">
+    <style name="Body2.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
-    <style name="Button.WoodyBrown">
+    <style name="Button.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 
-    <style name="Caption.WoodyBrown">
+    <style name="Caption.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 

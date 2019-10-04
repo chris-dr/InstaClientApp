@@ -5,7 +5,7 @@
     android:id="@+id/loginRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+    tools:theme="@style/ProfileTheme">
 
     <ImageView
         android:id="@+id/loginBackgroundImg"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/loginMainDescription"
-            style="@style/H5.WoodyBrown"
+            style="@style/H5.WoodyBrownText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
@@ -52,7 +52,7 @@
 
         <TextView
             android:id="@+id/loginSecondaryDescription"
-            style="@style/Body1.WoodyBrown"
+            style="@style/Body1.WoodyBrownText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -65,16 +65,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
-            style="@style/Button.WoodyBrown"
+            style="@style/Button.WoodyBrownText.Watusi"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="36dp"
-            android:backgroundTint="@color/watusi"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
             android:text="@string/shared_login"
-            app:cornerRadius="20dp"
+            android:textAppearance="@style/Button.WoodyBrownText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

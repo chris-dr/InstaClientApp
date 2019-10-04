@@ -43,21 +43,31 @@ class LoginWebActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.showProgress.observe(this, Observer { shouldShow ->
-            loginProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
-        })
-        viewModel.loadLoginForm.observe(this, Observer { url ->
-            loginWebView.loadUrl(url)
-        })
-        viewModel.showLoginForm.observe(this, Observer { shouldShow ->
-            TransitionManager.beginDelayedTransition(webLoginRoot)
-            loginWebView.visibility = if (shouldShow) View.VISIBLE else View.GONE
-        })
-        //todo: maybe not here
-        viewModel.openProfile.observe(this, Observer {
-            startActivity(ProfileActivity.getStartIntent(this))
-            finish()
-        })
+        viewModel.apply {
+            showProgress.observe(this@LoginWebActivity, Observer { shouldShow ->
+                loginProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
+            })
+            loadLoginForm.observe(this@LoginWebActivity, Observer { url ->
+                loginWebView.loadUrl(url)
+            })
+            showLoginForm.observe(this@LoginWebActivity, Observer { shouldShow ->
+                TransitionManager.beginDelayedTransition(webLoginRoot)
+                loginWebView.visibility = if (shouldShow) View.VISIBLE else View.GONE
+            })
+            showErrorState.observe(this@LoginWebActivity, Observer { shouldShow ->
+                loginWebErrorState.visibility = if (shouldShow) {
+                    TransitionManager.beginDelayedTransition(webLoginRoot)
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            })
+            openProfile.observe(this@LoginWebActivity, Observer {
+                val intent = ProfileActivity.getStartIntent(this@LoginWebActivity)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            })
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -73,6 +83,9 @@ class LoginWebActivity : AppCompatActivity() {
             javaScriptEnabled = true
         }
         loginWebView.webViewClient = AuthWebViewClient()
+        loginWebErrorState.onRetryClicked = {
+            viewModel.reloadAuthForm()
+        }
     }
 
     inner class AuthWebViewClient : WebViewClient() {

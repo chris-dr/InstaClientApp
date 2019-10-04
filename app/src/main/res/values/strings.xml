@@ -10,4 +10,6 @@
     <string name="itemFeed_likesCountLabel">%d people like this</string>
     <string name="itemFeed_noLikesLabel">No likes yet</string>
     <string name="profile_logoutFailed">Logout failed</string>
+    <string name="errorState_errorMsg">Something went wrong.\nPlease try to load the page again</string>
+    <string name="errorState_reload">Reload</string>
 </resources>

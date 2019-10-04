@@ -8,25 +8,30 @@ import com.drevnitskaya.instaclientapp.domain.auth.ComposeAuthUrlUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.GetAccessTokenUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.ParseAuthCodeUseCase
 import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
+import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
 import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class LoginWebViewModel(
-    composeAuthUrlUseCase: ComposeAuthUrlUseCase,
+    private val networkStateProvider: NetworkStateProvider,
+    private val composeAuthUrlUseCase: ComposeAuthUrlUseCase,
     private val parseAuthCodeUseCase: ParseAuthCodeUseCase,
     private val getAccessTokenUseCase: GetAccessTokenUseCase
 ) : ViewModel() {
     val showProgress = MutableLiveData<Boolean>()
     val loadLoginForm = MutableLiveData<String>()
     val showLoginForm = MutableLiveData<Boolean>()
-    //todo: not here
+    val showErrorState = MutableLiveData<Boolean>()
     val openProfile = SingleLiveEvent<Unit>()
     private var redirectUrl: String? = null
 
     init {
-        showProgress.value = true
-        val authUrl = composeAuthUrlUseCase.execute()
-        loadLoginForm.value = authUrl
+        if (networkStateProvider.isNetworkAvailable()) {
+            showProgress.value = true
+            loadAuthForm()
+        } else {
+            handleError()
+        }
     }
 
     fun handleAuthUrl(redirectUrl: String?) {
@@ -39,7 +44,7 @@ class LoginWebViewModel(
                         getToken(authCode)
                     }
                     is UseCaseResult.Error -> {
-                        TODO("Handle this error later")
+                        showErrorState.value = true
                     }
                 }
             }
@@ -49,29 +54,44 @@ class LoginWebViewModel(
     fun onLoadFormFinished(url: String?) {
         if (redirectUrl == url) {
             showProgress.value = false
-            showLoginForm.value = true
+            if (showErrorState.value != true) {
+                showLoginForm.value = true
+            }
         }
     }
 
     fun handleError() {
+        showProgress.value = false
+        showLoginForm.value = false
+        showErrorState.value = true
+    }
 
+    fun reloadAuthForm() {
+        if (networkStateProvider.isNetworkAvailable()) {
+            showErrorState.value = false
+            showProgress.value = true
+            loadAuthForm()
+        } else {
+            showErrorState.value = true
+        }
+    }
+
+    private fun loadAuthForm() {
+        val authUrl = composeAuthUrlUseCase.execute()
+        loadLoginForm.value = authUrl
     }
 
     private suspend fun getToken(authCode: String?) {
         authCode?.let { code ->
             when (getAccessTokenUseCase.execute(code)) {
-                is UseCaseResult.Complete -> {
-                    //TODO: Open profile screen
-                    openProfile.call()
-                }
-                is UseCaseResult.Error -> {
-                    TODO("Handle error")
-                }
+                is UseCaseResult.Complete -> openProfile.call()
+                is UseCaseResult.Error -> showErrorState.value = true
                 else -> {
+                    //do nothing;
                 }
             }
         } ?: run {
-            TODO("Handle error")
+            showErrorState.value = true
         }
     }
 }

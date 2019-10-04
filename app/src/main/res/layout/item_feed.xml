@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/itemFeedLikesLabel"
-            style="@style/Caption.WoodyBrown"
+            style="@style/Caption.WoodyBrownText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/itemFeedLocationLabel"
-            style="@style/Caption.WoodyBrown"
+            style="@style/Caption.WoodyBrownText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"

@@ -20,6 +20,7 @@ val loginModule = module {
 
     viewModel {
         LoginWebViewModel(
+            networkStateProvider = get(),
             composeAuthUrlUseCase = get(),
             parseAuthCodeUseCase = get(),
             getAccessTokenUseCase = get()

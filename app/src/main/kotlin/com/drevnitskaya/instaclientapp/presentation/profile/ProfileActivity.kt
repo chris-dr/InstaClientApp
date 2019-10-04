@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.drevnitskaya.instaclientapp.R
+import com.drevnitskaya.instaclientapp.data.remote.api.Profile
 import com.drevnitskaya.instaclientapp.extensions.loadImage
 import com.drevnitskaya.instaclientapp.extensions.showSnackbar
 import com.drevnitskaya.instaclientapp.presentation.login.LoginActivity
@@ -50,11 +51,7 @@ class ProfileActivity : AppCompatActivity() {
             showUserInfo.observe(this@ProfileActivity, Observer { profile ->
                 TransitionManager.beginDelayedTransition(profileRoot)
                 val visibility = profile?.let {
-                    profileImage.loadImage(null, it.profilePictureUrl)
-                    profileFullName.text = it.fullName
-                    profileBio.text = it.bio
-                    profileFollowersCount.text = "${it.counts?.follows ?: 0}"
-                    profileFollowingCount.text = "${it.counts?.followedBy ?: 0}"
+                    setUserData(profile)
                     View.VISIBLE
                 } ?: View.GONE
                 setProfileContentVisibility(visibility)
@@ -63,8 +60,13 @@ class ProfileActivity : AppCompatActivity() {
                 adapterMedia.feed = feed
             })
             openLogin.observe(this@ProfileActivity, Observer {
-                startActivity(LoginActivity.getStartIntent(this@ProfileActivity))
-                finish()
+                val intent = LoginActivity.getStartIntent(this@ProfileActivity)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            })
+            showErrorState.observe(this@ProfileActivity, Observer { shouldShow ->
+                TransitionManager.beginDelayedTransition(profileRoot)
+                profileErrorState.visibility = if (shouldShow) View.VISIBLE else View.GONE
             })
             showLogoutFailed.observe(this@ProfileActivity, Observer {
                 showSnackbar(profileRoot, getString(R.string.profile_logoutFailed))
@@ -77,4 +79,11 @@ class ProfileActivity : AppCompatActivity() {
         profileFeed.visibility = visibility
     }
 
+    private fun setUserData(profile: Profile) {
+        profileImage.loadImage(null, profile.profilePictureUrl)
+        profileFullName.text = profile.fullName
+        profileBio.text = profile.bio
+        profileFollowersCount.text = "${profile.counts?.follows ?: 0}"
+        profileFollowingCount.text = "${profile.counts?.followedBy ?: 0}"
+    }
 }

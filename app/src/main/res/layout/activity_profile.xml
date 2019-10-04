@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/profileFullName"
-                style="@style/H6.WoodyBrown"
+                style="@style/H6.WoodyBrownText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -63,7 +63,7 @@
 
             <TextView
                 android:id="@+id/profileBio"
-                style="@style/Body2.WoodyBrown"
+                style="@style/Body2.WoodyBrownText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/profileFollowersCount"
-                style="@style/Subtitle1.WoodyBrown"
+                style="@style/Subtitle1.WoodyBrownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -88,7 +88,7 @@
 
             <TextView
                 android:id="@+id/profileFollowersLabel"
-                style="@style/Body2.WoodyBrown"
+                style="@style/Body2.WoodyBrownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_followersLabel"
@@ -97,7 +97,7 @@
 
             <TextView
                 android:id="@+id/profileFollowingCount"
-                style="@style/Subtitle1.WoodyBrown"
+                style="@style/Subtitle1.WoodyBrownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/profileFollowingLabel"
@@ -107,7 +107,7 @@
 
             <TextView
                 android:id="@+id/profileFollowingLabel"
-                style="@style/Body2.WoodyBrown"
+                style="@style/Body2.WoodyBrownText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -134,6 +134,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <com.drevnitskaya.instaclientapp.presentation.shared.ErrorStateView
+        android:id="@+id/profileErrorState"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

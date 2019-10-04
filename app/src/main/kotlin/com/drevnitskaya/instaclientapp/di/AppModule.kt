@@ -11,6 +11,8 @@ import com.drevnitskaya.instaclientapp.data.repository.auth.AuthRemoteRepository
 import com.drevnitskaya.instaclientapp.data.repository.auth.AuthRemoteRepositoryImpl
 import com.drevnitskaya.instaclientapp.framework.api.BaseRetrofitClientFactory
 import com.drevnitskaya.instaclientapp.framework.api.INSTA_BASE_URL
+import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
+import com.drevnitskaya.instaclientapp.utils.NetworkStateProviderImpl
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -64,4 +66,6 @@ val appModule = module {
     }
 
     single<PreferenceProvider> { SharedPreferenceProvider(context = get()) }
+
+    single<NetworkStateProvider> { NetworkStateProviderImpl(context = get()) }
 }
