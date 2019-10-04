@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/profileFullName"
-                style="@style/H6.WoodyBrownText"
+                style="@style/H6.WoodyBrown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/profileFollowersCount"
-                style="@style/Subtitle1.WoodyBrownText"
+                style="@style/Subtitle1.WoodyBrown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/profileFollowingCount"
-                style="@style/Subtitle1.WoodyBrownText"
+                style="@style/Subtitle1.WoodyBrown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/profileFollowingLabel"

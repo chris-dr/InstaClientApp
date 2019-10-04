@@ -40,12 +40,11 @@ class FeedAdapter : RecyclerView.Adapter<FeedAdapter.FeedItemHolder>() {
         fun bind(item: FeedItem) = with(itemView) {
             itemFeedImage.loadImage(placeholder, item.images?.standardResolutionImg?.url)
             val likesCount = item.likes?.count ?: 0
-//            itemFeedLikesLabel.text = if (likesCount > 0) {
-//                context.getString(R.string.itemFeed_likesCountLabel, likesCount)
-//            } else {
-//                context.getString(R.string.itemFeed_noLikesLabel)
-//            }
-            itemFeedLikesLabel.text = context.getString(R.string.itemFeed_noLikesLabel)
+            itemFeedLikesLabel.text = if (likesCount > 0) {
+                context.getString(R.string.itemFeed_likesCountLabel, likesCount)
+            } else {
+                context.getString(R.string.itemFeed_noLikesLabel)
+            }
             itemFeedLocationLabel.text = item.location?.name ?: ""
         }
     }

@@ -65,7 +65,7 @@ class LoginWebActivity : AppCompatActivity() {
         setSupportActionBar(loginToolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            setTitle(R.string.login_title)
+            setTitle(R.string.shared_login)
         }
         loginToolbar.setNavigationOnClickListener { onBackPressed() }
 
