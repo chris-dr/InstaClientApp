@@ -11,7 +11,8 @@
         android:id="@+id/profileAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profileUserInfo"
@@ -107,7 +108,8 @@
         android:clipToPadding="false"
         android:padding="12dp"
         android:visibility="gone"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/profileProgress"

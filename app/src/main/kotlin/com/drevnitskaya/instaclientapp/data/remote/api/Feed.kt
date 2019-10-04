@@ -29,7 +29,7 @@ data class Likes(
     var count: Int? = 0
 )
 
-data class InstaMedia(
+data class FeedItem(
     var id: String? = null,
     var type: String? = null,
     @SerializedName("created_time")

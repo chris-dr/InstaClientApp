@@ -16,7 +16,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
-    private val adapterMedia = MediaAdapter()
+    private val adapterMedia = FeedAdapter()
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -57,7 +57,7 @@ class ProfileActivity : AppCompatActivity() {
             setProfileContentVisibility(visibility)
         })
         viewModel.showFeed.observe(this, Observer { feed ->
-            adapterMedia.media = feed
+            adapterMedia.feed = feed
         })
     }
 

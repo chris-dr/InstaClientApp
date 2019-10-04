@@ -1,13 +1,13 @@
 package com.drevnitskaya.instaclientapp.di
 
-import com.drevnitskaya.instaclientapp.data.repository.InstaMediaRepository
-import com.drevnitskaya.instaclientapp.data.repository.InstaMediaRepositoryImpl
+import com.drevnitskaya.instaclientapp.data.repository.FeedRepository
+import com.drevnitskaya.instaclientapp.data.repository.FeedRepositoryImpl
 import com.drevnitskaya.instaclientapp.data.repository.ProfileRepository
 import com.drevnitskaya.instaclientapp.data.repository.ProfileRepositoryImpl
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCaseImpl
-import com.drevnitskaya.instaclientapp.domain.GetRemoteMediaUseCase
-import com.drevnitskaya.instaclientapp.domain.GetRemoteMediaUseCaseImpl
+import com.drevnitskaya.instaclientapp.domain.GetRemoteFeedUseCase
+import com.drevnitskaya.instaclientapp.domain.GetRemoteFeedUseCaseImpl
 import com.drevnitskaya.instaclientapp.presentation.profile.ProfileViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -22,19 +22,19 @@ val profileModule = module {
 
     factory<GetProfileUseCase> { GetProfileUseCaseImpl(profileRepository = get()) }
 
-    factory<InstaMediaRepository> {
-        InstaMediaRepositoryImpl(
+    factory<FeedRepository> {
+        FeedRepositoryImpl(
             authLocalRepository = get(),
             remoteDataSource = get()
         )
     }
 
-    factory<GetRemoteMediaUseCase> { GetRemoteMediaUseCaseImpl(mediaRepository = get()) }
+    factory<GetRemoteFeedUseCase> { GetRemoteFeedUseCaseImpl(feedRepository = get()) }
 
     viewModel {
         ProfileViewModel(
             getProfileUseCase = get(),
-            getMediaUseCase = get()
+            getFeedUseCase = get()
         )
     }
 }

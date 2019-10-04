@@ -2,19 +2,19 @@ package com.drevnitskaya.instaclientapp.data.repository
 
 import com.drevnitskaya.instaclientapp.data.remote.api.DataResponse
 import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
-import com.drevnitskaya.instaclientapp.data.remote.api.InstaMedia
+import com.drevnitskaya.instaclientapp.data.remote.api.FeedItem
 import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepository
 
-interface InstaMediaRepository {
-    suspend fun getRemoteMedia(): DataResponse<List<InstaMedia>>
+interface FeedRepository {
+    suspend fun getRemoteFeed(): DataResponse<List<FeedItem>>
 }
 
-class InstaMediaRepositoryImpl(
+class FeedRepositoryImpl(
     private val authLocalRepository: AuthLocalRepository,
     private val remoteDataSource: InstaApiInterface
-) : InstaMediaRepository {
-    override suspend fun getRemoteMedia(): DataResponse<List<InstaMedia>> {
+) : FeedRepository {
+    override suspend fun getRemoteFeed(): DataResponse<List<FeedItem>> {
         val token = authLocalRepository.token
-        return remoteDataSource.getMedia(token = token, maxId = 0, minId = 0, count = 10)
+        return remoteDataSource.getFeed(token = token, maxId = 0, minId = 0, count = 10)
     }
 }
