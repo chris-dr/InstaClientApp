@@ -8,7 +8,9 @@
     <color name="watusi">#FEDBD0</color>
     <color name="bridesmaid">#FEEAE6</color>
     <color name="woodyBrown">#442C2E</color>
+    <color name="woodyBrownPressed">#854C51</color>
     <color name="soapstone">#FFFBFA</color>
 
     <color name="white40Percent">#66ffffff</color>
+    <color name="bridesmaid95Percent">#F2FEEAE6</color>
 </resources>

@@ -18,8 +18,9 @@
             android:id="@+id/profileUserInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/watusi"
-            android:padding="16dp"
+            android:background="@color/bridesmaid"
+            android:paddingStart="16dp"
+            android:paddingBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/profileFeed"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -41,18 +42,35 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                app:layout_constraintEnd_toStartOf="@+id/profileLogout"
                 app:layout_constraintStart_toEndOf="@+id/profileImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Christina Drevnitskaya" />
 
+            <ImageView
+                android:id="@+id/profileLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="12dp"
+                android:tint="@color/woodyBrown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_logout" />
+
             <TextView
                 android:id="@+id/profileBio"
                 style="@style/Body2.WoodyBrown"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/profileFullName"
                 app:layout_constraintTop_toBottomOf="@+id/profileFullName"
                 tools:text="Some Bio here" />

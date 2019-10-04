@@ -8,6 +8,8 @@ import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCaseImpl
 import com.drevnitskaya.instaclientapp.domain.GetRemoteFeedUseCase
 import com.drevnitskaya.instaclientapp.domain.GetRemoteFeedUseCaseImpl
+import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
+import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCaseImpl
 import com.drevnitskaya.instaclientapp.presentation.profile.ProfileViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -31,10 +33,13 @@ val profileModule = module {
 
     factory<GetRemoteFeedUseCase> { GetRemoteFeedUseCaseImpl(feedRepository = get()) }
 
+    factory<LogoutUseCase> { LogoutUseCaseImpl(profileRepository = get()) }
+
     viewModel {
         ProfileViewModel(
             getProfileUseCase = get(),
-            getFeedUseCase = get()
+            getFeedUseCase = get(),
+            logoutUseCase = get()
         )
     }
 }

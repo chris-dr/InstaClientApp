@@ -10,9 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.drevnitskaya.instaclientapp.R
 import com.drevnitskaya.instaclientapp.extensions.loadImage
+import com.drevnitskaya.instaclientapp.extensions.showSnackbar
+import com.drevnitskaya.instaclientapp.presentation.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 class ProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
@@ -33,32 +34,42 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initViews() {
         profileFeed.apply {
-            val glm = GridLayoutManager(context, 2)
-            layoutManager = glm
+            layoutManager = GridLayoutManager(context, 2)
             adapter = adapterMedia
         }
-
+        profileLogout.setOnClickListener {
+            viewModel.logout()
+        }
     }
 
     private fun initViewModel() {
-        viewModel.showProgress.observe(this, Observer { shouldShow ->
-            profileProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
-        })
-        viewModel.showUserInfo.observe(this, Observer { profile ->
-            TransitionManager.beginDelayedTransition(profileRoot)
-            val visibility = profile?.let {
-                profileImage.loadImage(null, it.profilePictureUrl)
-                profileFullName.text = it.fullName
-                profileBio.text = it.bio
-                profileFollowersCount.text = "${it.counts?.follows ?: 0}"
-                profileFollowingCount.text = "${it.counts?.followedBy ?: 0}"
-                View.VISIBLE
-            } ?: View.GONE
-            setProfileContentVisibility(visibility)
-        })
-        viewModel.showFeed.observe(this, Observer { feed ->
-            adapterMedia.feed = feed
-        })
+        viewModel.apply {
+            showProgress.observe(this@ProfileActivity, Observer { shouldShow ->
+                profileProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
+            })
+            showUserInfo.observe(this@ProfileActivity, Observer { profile ->
+                TransitionManager.beginDelayedTransition(profileRoot)
+                val visibility = profile?.let {
+                    profileImage.loadImage(null, it.profilePictureUrl)
+                    profileFullName.text = it.fullName
+                    profileBio.text = it.bio
+                    profileFollowersCount.text = "${it.counts?.follows ?: 0}"
+                    profileFollowingCount.text = "${it.counts?.followedBy ?: 0}"
+                    View.VISIBLE
+                } ?: View.GONE
+                setProfileContentVisibility(visibility)
+            })
+            showFeed.observe(this@ProfileActivity, Observer { feed ->
+                adapterMedia.feed = feed
+            })
+            openLogin.observe(this@ProfileActivity, Observer {
+                startActivity(LoginActivity.getStartIntent(this@ProfileActivity))
+                finish()
+            })
+            showLogoutFailed.observe(this@ProfileActivity, Observer {
+                showSnackbar(profileRoot, getString(R.string.profile_logoutFailed))
+            })
+        }
     }
 
     private fun setProfileContentVisibility(visibility: Int) {

@@ -8,16 +8,21 @@ import com.drevnitskaya.instaclientapp.data.remote.api.Profile
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
 import com.drevnitskaya.instaclientapp.domain.GetRemoteFeedUseCase
 import com.drevnitskaya.instaclientapp.domain.UseCaseResult
+import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
+import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val getProfileUseCase: GetProfileUseCase,
-    private val getFeedUseCase: GetRemoteFeedUseCase
+    private val getFeedUseCase: GetRemoteFeedUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     val showProgress = MutableLiveData<Boolean>()
     val showUserInfo = MutableLiveData<Profile>()
     val showFeed = MutableLiveData<List<FeedItem>>()
+    val openLogin = SingleLiveEvent<Nothing>()
+    val showLogoutFailed = SingleLiveEvent<Nothing>()
 
     init {
         viewModelScope.launch {
@@ -32,7 +37,7 @@ class ProfileViewModel(
                 is UseCaseResult.Success -> {
                     val profile = profileResult.data
                     showProgress.value = false
-                    showUserInfo.postValue(profile)
+                    showUserInfo.value = profile
                 }
                 is UseCaseResult.Error -> {
                     //TODO: Handle Error!
@@ -43,12 +48,22 @@ class ProfileViewModel(
             when (mediaResult) {
                 is UseCaseResult.Success -> {
                     val instaMedia = mediaResult.data
-                    showFeed.postValue(instaMedia)
+                    showFeed.value = instaMedia
                 }
                 is UseCaseResult.Error -> {
                     mediaResult.exception.printStackTrace()
                 }
             }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            showLogoutFailed.call()
+//            when (logoutUseCase.execute()) {
+//                is UseCaseResult.Complete -> openLogin.call()
+//                is UseCaseResult.Error -> showLogoutFailed.call()
+//            }
         }
     }
 }

@@ -4,9 +4,10 @@
     <string name="login_passwordHint">Password</string>
     <string name="shared_login">Login</string>
     <string name="login_mainDescription">Instagram client\nsample app by Chris</string>
-    <string name="login_secondaryDescription">To continue please authorize via your\nInstagram profile</string>
+    <string name="login_secondaryDescription">To continue please authorize via your\nInstagram account</string>
     <string name="profile_followingLabel">following</string>
     <string name="profile_followersLabel">followers</string>
     <string name="itemFeed_likesCountLabel">%d people like this</string>
     <string name="itemFeed_noLikesLabel">No likes yet</string>
+    <string name="profile_logoutFailed">Logout failed</string>
 </resources>

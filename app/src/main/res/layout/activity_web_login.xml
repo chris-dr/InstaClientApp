@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/watusi"
-            app:titleTextColor="@color/woodyBrown"
+            app:titleTextAppearance="@style/Subtitle1.WoodyBrown"
             tools:title="Login" />
 
     </com.google.android.material.appbar.AppBarLayout>
