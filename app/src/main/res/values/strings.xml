@@ -14,7 +14,9 @@
     <string name="errorState_reload">Reload</string>
     <string name="itemFeed_errorMessage">Some error occurred</string>
     <string name="itemFeed_retry">Retry</string>
-    <string name="profile_dataFromCache">Can\'t fetch the data, view cache</string>
-    <string name="profile_emptyFeed">Your recent Instagram media will be displayed here. Pull to refresh one you add it</string>
-    <string name="profile_loadFeedError">Can\'t fetch the feed. Pull to try again</string>
+    <string name="profile_offlineMode">Offline mode: feed fetching has failed</string>
+    <string name="profile_emptyFeed">Your recent Instagram media will be displayed here. Pull to refresh once you add it</string>
+    <string name="profile_loadFeedError">Feed fetching has failed. Pull down to try again</string>
+    <string name="profile_refreshingError">The feed hasn\'t been refreshed</string>
+    <string name="profile_retry">Retry</string>
 </resources>

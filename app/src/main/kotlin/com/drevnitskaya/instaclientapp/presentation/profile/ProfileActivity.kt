@@ -62,6 +62,9 @@ class ProfileActivity : AppCompatActivity() {
         profileErrorState.onRetryClicked = {
             viewModel.loadProfileContent()
         }
+        profileRefreshLayout.setOnRefreshListener {
+            viewModel.refreshContent()
+        }
         profileLogout.setOnClickListener {
             viewModel.logout()
         }
@@ -71,6 +74,19 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.apply {
             showProgress.observe(this@ProfileActivity, Observer { shouldShow ->
                 profileProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
+            })
+            showRefreshing.observe(this@ProfileActivity, Observer { shouldShow ->
+                profileRefreshLayout.isRefreshing = shouldShow
+            })
+            showRefreshingFailedState.observe(this@ProfileActivity, Observer {
+                showSnackbar(
+                    profileRoot,
+                    getString(R.string.profile_refreshingError),
+                    getString(R.string.profile_retry),
+                    actionListener = {
+                        viewModel.refreshContent()
+                    }
+                )
             })
             showUserInfo.observe(this@ProfileActivity, Observer { profile ->
                 TransitionManager.beginDelayedTransition(profileRoot)
@@ -89,8 +105,8 @@ class ProfileActivity : AppCompatActivity() {
             showFeedErrorState.observe(this@ProfileActivity, Observer { shouldShow ->
                 showNoFeedMessage(shouldShow, R.string.profile_loadFeedError)
             })
-            showCachedDataMessage.observe(this@ProfileActivity, Observer {
-                showSnackbar(profileRoot, getString(R.string.profile_dataFromCache))
+            showOfflineModeMessage.observe(this@ProfileActivity, Observer {
+                showSnackbar(profileRoot, getString(R.string.profile_offlineMode))
             })
             showLoadMoreFeed.observe(this@ProfileActivity, Observer { shouldShow ->
                 adapterMedia.showLoadMore = shouldShow

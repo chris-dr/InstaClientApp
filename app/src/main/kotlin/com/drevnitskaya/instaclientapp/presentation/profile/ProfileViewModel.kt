@@ -12,6 +12,7 @@ import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
 import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private const val VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT = 0.85
@@ -24,6 +25,8 @@ class ProfileViewModel(
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     val showProgress = MutableLiveData<Boolean>()
+    val showRefreshing = MutableLiveData(false)
+    val showRefreshingFailedState = SingleLiveEvent<Unit>()
     val showUserInfo = MutableLiveData<Profile>()
     val showFeed = MutableLiveData<List<FeedItem>>()
     val showEmptyFeedState = MutableLiveData<Boolean>()
@@ -33,25 +36,25 @@ class ProfileViewModel(
     val showErrorState = MutableLiveData<Boolean>()
     val showLoadMoreFeed = MutableLiveData(false)
     val showLoadMoreError = MutableLiveData<Boolean>()
-    val showCachedDataMessage = SingleLiveEvent<Unit>()
+    val showOfflineModeMessage = SingleLiveEvent<Unit>()
     private var nextFeedUrl: String? = null
 
     init {
         loadProfileContent()
     }
 
-    fun loadProfileContent() {
+    fun loadProfileContent(isRefreshing: Boolean = false) {
         viewModelScope.launch {
             showErrorState.value = false
-            showProgress.value = true
+            if (isRefreshing.not()) {
+                showProgress.value = true
+            }
             val profileAsync = async { getProfileUseCase.execute() }
             val feedAsync = async { loadInitialFeedUseCase.execute() }
-
             val profileResult = profileAsync.await()
             val feedResult = feedAsync.await()
-
-            handleProfileResult(result = profileResult)
-            handleFeedResult(result = feedResult)
+            handleProfileResult(result = profileResult, isRefreshing = isRefreshing)
+            handleFeedResult(result = feedResult, isRefreshing = isRefreshing)
         }
     }
 
@@ -59,6 +62,7 @@ class ProfileViewModel(
         if (localVisibleRectBottomPosition >= VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT * itemHeight
             && showLoadMoreFeed.value == false
             && nextFeedUrl.isNullOrBlank().not()
+            && showRefreshing.value == false
         ) {
             loadMoreFeed()
         }
@@ -76,7 +80,6 @@ class ProfileViewModel(
                 is Result.Success -> {
                     val feedWrapper = result.data
                     val newItems = feedWrapper?.feed
-
                     if (newItems.isNullOrEmpty().not()) {
                         val currFeed = showFeed.value?.toMutableList()
                         val tempList = currFeed?.apply {
@@ -95,6 +98,21 @@ class ProfileViewModel(
         }
     }
 
+    fun refreshContent() {
+        if (networkStateProvider.isNetworkAvailable().not()) {
+            showRefreshing.value = false
+            showRefreshingFailedState.call()
+            return
+        }
+        if (showLoadMoreFeed.value == true) {
+            showRefreshing.value = false
+            return
+        }
+        nextFeedUrl = null
+        showRefreshing.value = true
+        loadProfileContent(isRefreshing = true)
+    }
+
     fun logout() {
         viewModelScope.launch {
             when (logoutUseCase.execute()) {
@@ -104,23 +122,27 @@ class ProfileViewModel(
         }
     }
 
-    private fun handleProfileResult(result: Result<ProfileWrapper>) {
-        showProgress.value = false
+    private suspend fun handleProfileResult(result: Result<ProfileWrapper>, isRefreshing: Boolean) {
         when (result) {
             is Result.Success -> {
                 val profileWrapper = result.data
                 showUserInfo.value = profileWrapper?.profile
                 if (profileWrapper?.fromCache == true) {
-                    showCachedDataMessage.call()
+                    delay(150)
+                    showOfflineModeMessage.call()
                 }
             }
             is Result.Error -> {
-                showErrorState.value = true
+                if (isRefreshing.not()) {
+                    showErrorState.value = true
+                }
             }
         }
     }
 
-    private fun handleFeedResult(result: Result<FeedWrapper>) {
+    private fun handleFeedResult(result: Result<FeedWrapper>, isRefreshing: Boolean) {
+        showProgress.value = false
+        showRefreshing.value = false
         when (result) {
             is Result.Success -> {
                 val feedWrapper = result.data
@@ -131,12 +153,19 @@ class ProfileViewModel(
                         nextFeedUrl = feedWrapper.nextUrl
                     }
                 } else {
-                    showEmptyFeedState.value = true
+                    if (isRefreshing.not()) {
+                        showEmptyFeedState.value = true
+                    } else {
+                        showRefreshingFailedState.call()
+                    }
                 }
             }
             is Result.Error -> {
-                showProgress.value = false
-                showFeedErrorState.value = true
+                if (isRefreshing.not()) {
+                    showFeedErrorState.value = true
+                } else {
+                    showRefreshingFailedState.call()
+                }
             }
         }
     }
