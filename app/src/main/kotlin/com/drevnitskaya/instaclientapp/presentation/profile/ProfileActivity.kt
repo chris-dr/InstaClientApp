@@ -82,6 +82,9 @@ class ProfileActivity : AppCompatActivity() {
             showFeed.observe(this@ProfileActivity, Observer { feed ->
                 adapterMedia.feed = feed
             })
+            showCachedDataMessage.observe(this@ProfileActivity, Observer {
+                showSnackbar(profileRoot, getString(R.string.profile_dataFromCache))
+            })
             showLoadMoreFeed.observe(this@ProfileActivity, Observer { shouldShow ->
                 adapterMedia.showLoadMore = shouldShow
             })

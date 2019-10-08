@@ -1,5 +1,6 @@
 package com.drevnitskaya.instaclientapp.di
 
+import androidx.room.Room
 import com.drevnitskaya.instaclientapp.BuildConfig
 import com.drevnitskaya.instaclientapp.data.source.local.PreferenceProvider
 import com.drevnitskaya.instaclientapp.data.source.local.SharedPreferenceProvider
@@ -11,6 +12,8 @@ import com.drevnitskaya.instaclientapp.data.repository.AuthRepository
 import com.drevnitskaya.instaclientapp.data.repository.AuthRepositoryImpl
 import com.drevnitskaya.instaclientapp.framework.api.BaseRetrofitClientFactory
 import com.drevnitskaya.instaclientapp.framework.api.INSTA_BASE_URL
+import com.drevnitskaya.instaclientapp.framework.db.DATA_BASE_NAME
+import com.drevnitskaya.instaclientapp.framework.db.InstaAppDataBase
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProviderImpl
 import okhttp3.Interceptor
@@ -69,4 +72,12 @@ val appModule = module {
     single<PreferenceProvider> { SharedPreferenceProvider(context = get()) }
 
     single<NetworkStateProvider> { NetworkStateProviderImpl(context = get()) }
+
+    single<InstaAppDataBase> {
+        Room.databaseBuilder(
+            get(),
+            InstaAppDataBase::class.java,
+            DATA_BASE_NAME
+        ).build()
+    }
 }

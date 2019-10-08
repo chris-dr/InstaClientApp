@@ -9,6 +9,8 @@ import com.drevnitskaya.instaclientapp.domain.GetMoreFeedUseCase
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
 import com.drevnitskaya.instaclientapp.domain.LoadInitialFeedUseCase
 import com.drevnitskaya.instaclientapp.data.Result
+import com.drevnitskaya.instaclientapp.data.entities.DATA_SOURCE_LOCAL
+import com.drevnitskaya.instaclientapp.data.entities.ProfileWrapper
 import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
 import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
@@ -32,6 +34,7 @@ class ProfileViewModel(
     val showErrorState = MutableLiveData<Boolean>()
     val showLoadMoreFeed = MutableLiveData(false)
     val showLoadMoreError = MutableLiveData<Boolean>()
+    val showCachedDataMessage = SingleLiveEvent<Unit>()
     private var nextFeedUrl: String? = null
 
     init {
@@ -43,12 +46,15 @@ class ProfileViewModel(
             showErrorState.value = false
             showProgress.value = true
             val profileAsync = async { getProfileUseCase.execute() }
-            val feedAsync = async { getFeedUseCase.execute() }
+//            val feedAsync = async { getFeedUseCase.execute() }
 
             val profileResult = profileAsync.await()
-            val feedResult = feedAsync.await()
+//            val feedResult = feedAsync.await()
 
-            if (profileResult is Result.Success && feedResult is Result.Success) {
+            handleProfileResult(result = profileResult)
+
+            //TODO: Handle feed later
+            /*if (profileResult is Result.Success && feedResult is Result.Success) {
                 val profile = profileResult.data
                 val feed = feedResult.data?.data
                 nextFeedUrl = feedResult.data?.pagination?.nextUrl
@@ -57,9 +63,10 @@ class ProfileViewModel(
                 //todo: handle feed, can be empty!
                 showFeed.value = feed
             } else {
+                (profileResult as Result.Error).exception.printStackTrace()
                 showProgress.value = false
                 showErrorState.value = true
-            }
+            }*/
         }
     }
 
@@ -107,6 +114,25 @@ class ProfileViewModel(
             when (logoutUseCase.execute()) {
                 is Result.Complete -> openLogin.call()
                 is Result.Error -> showLogoutFailed.call()
+            }
+        }
+    }
+
+    private fun handleProfileResult(result: Result<ProfileWrapper>) {
+        when (result) {
+            is Result.Success -> {
+                val profileWrapper = result.data
+                showUserInfo.value = profileWrapper?.profile
+                if (profileWrapper?.dataSource == DATA_SOURCE_LOCAL) {
+                    showCachedDataMessage.call()
+                }
+            }
+            is Result.Error -> {
+                //todo: remove
+                result.exception.printStackTrace()
+
+                showProgress.value = false
+                showErrorState.value = true
             }
         }
     }

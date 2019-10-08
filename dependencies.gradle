@@ -14,7 +14,7 @@ ext {
     room = [
             runtime : "androidx.room:room-runtime:$roomVersion",
             compiler: "androidx.room:room-compiler:$roomVersion",
-            rxJava  : "androidx.room:room-rxjava2:$roomVersion"
+            ktx     : "androidx.room:room-ktx:$roomVersion"
     ]
 
     koinVersion = '2.0.1'

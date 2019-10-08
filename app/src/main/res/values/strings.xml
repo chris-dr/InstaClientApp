@@ -14,4 +14,5 @@
     <string name="errorState_reload">Reload</string>
     <string name="itemFeed_errorMessage">Some error occurred</string>
     <string name="itemFeed_retry">Retry</string>
+    <string name="profile_dataFromCache">Can\'t fetch the data, view cache</string>
 </resources>

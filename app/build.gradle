@@ -53,6 +53,10 @@ dependencies {
     implementation ext.retrofit.converter_gson
     implementation ext.logging_interceptor
 
+    implementation ext.room.runtime
+    implementation ext.room.ktx
+    kapt ext.room.compiler
+    
     implementation ext.glide
     kapt ext.glide_kapt
     implementation rounded_imageview
