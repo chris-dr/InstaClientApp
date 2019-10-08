@@ -15,7 +15,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT = 0.85
+private const val VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT = 0.7
 
 class ProfileViewModel(
     private val networkStateProvider: NetworkStateProvider,

@@ -24,8 +24,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        loginRoot.systemUiVisibility =
-            SYSTEM_UI_FLAG_LAYOUT_STABLE or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        loginRoot.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         loginRoot.setOnApplyWindowInsetsListener { _, windowInsets ->
             windowInsets
         }

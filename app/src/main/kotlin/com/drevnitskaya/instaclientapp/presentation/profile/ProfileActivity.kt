@@ -7,6 +7,7 @@ import android.transition.TransitionManager
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.drevnitskaya.instaclientapp.R
@@ -40,6 +41,17 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        profileRoot.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        profileAppBar.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.updatePadding(top = windowInsets.systemWindowInsetTop)
+            windowInsets
+        }
+        profileFeed.setOnApplyWindowInsetsListener { view, windowInsets ->
+            view.updatePadding(bottom = windowInsets.systemWindowInsetBottom)
+            windowInsets
+        }
         profileFeed.apply {
             val glm = GridLayoutManager(context, 2)
             glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
