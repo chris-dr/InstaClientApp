@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.drevnitskaya.instaclientapp.R
-import com.drevnitskaya.instaclientapp.data.source.remote.api.Profile
+import com.drevnitskaya.instaclientapp.data.entities.Profile
 import com.drevnitskaya.instaclientapp.extensions.loadImage
 import com.drevnitskaya.instaclientapp.extensions.showSnackbar
 import com.drevnitskaya.instaclientapp.presentation.login.LoginActivity

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drevnitskaya.instaclientapp.R
-import com.drevnitskaya.instaclientapp.data.source.remote.api.FeedItem
+import com.drevnitskaya.instaclientapp.data.entities.FeedItem
 import com.drevnitskaya.instaclientapp.extensions.loadImage
 import kotlinx.android.synthetic.main.item_feed.view.*
 import kotlinx.android.synthetic.main.item_feed_error.view.*

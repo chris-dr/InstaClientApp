@@ -13,8 +13,7 @@ val loginModule = module {
 
     factory<GetAccessTokenUseCase> {
         GetAccessTokenUseCaseImpl(
-            authRemoteRepository = get(),
-            authLocalRepository = get()
+            authRepository = get()
         )
     }
 

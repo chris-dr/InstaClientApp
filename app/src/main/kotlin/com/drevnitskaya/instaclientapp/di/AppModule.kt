@@ -3,12 +3,12 @@ package com.drevnitskaya.instaclientapp.di
 import com.drevnitskaya.instaclientapp.BuildConfig
 import com.drevnitskaya.instaclientapp.data.source.local.PreferenceProvider
 import com.drevnitskaya.instaclientapp.data.source.local.SharedPreferenceProvider
-import com.drevnitskaya.instaclientapp.data.source.remote.api.InstaApiInterface
-import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepository
-import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepositoryImpl
+import com.drevnitskaya.instaclientapp.data.source.remote.RemoteDataSource
+import com.drevnitskaya.instaclientapp.data.source.local.TokenLocalDataSource
+import com.drevnitskaya.instaclientapp.data.source.local.TokenLocalDataSourceImpl
 import com.drevnitskaya.instaclientapp.framework.api.BaseOkHttpClientBuilder
-import com.drevnitskaya.instaclientapp.data.repository.auth.AuthRemoteRepository
-import com.drevnitskaya.instaclientapp.data.repository.auth.AuthRemoteRepositoryImpl
+import com.drevnitskaya.instaclientapp.data.repository.AuthRepository
+import com.drevnitskaya.instaclientapp.data.repository.AuthRepositoryImpl
 import com.drevnitskaya.instaclientapp.framework.api.BaseRetrofitClientFactory
 import com.drevnitskaya.instaclientapp.framework.api.INSTA_BASE_URL
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
@@ -44,7 +44,7 @@ val appModule = module {
 
     single<Converter.Factory> { GsonConverterFactory.create() }
 
-    factory<InstaApiInterface> {
+    factory<RemoteDataSource> {
         BaseRetrofitClientFactory(
             baseOkHttpClientBuilder = get(),
             converterFactory = get(),
@@ -53,15 +53,16 @@ val appModule = module {
         ).build()
     }
 
-    factory<AuthRemoteRepository> {
-        AuthRemoteRepositoryImpl(
-            remoteDataSource = get()
+    factory<AuthRepository> {
+        AuthRepositoryImpl(
+            tokenLocalDataSource = get(),
+            tokenRemoteDataSource = get()
         )
     }
 
-    factory<AuthLocalRepository> {
-        AuthLocalRepositoryImpl(
-            localDataSource = get()
+    factory<TokenLocalDataSource> {
+        TokenLocalDataSourceImpl(
+            prefsProvider = get()
         )
     }
 

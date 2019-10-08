@@ -3,8 +3,8 @@ package com.drevnitskaya.instaclientapp.presentation.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.drevnitskaya.instaclientapp.data.source.remote.api.FeedItem
-import com.drevnitskaya.instaclientapp.data.source.remote.api.Profile
+import com.drevnitskaya.instaclientapp.data.entities.FeedItem
+import com.drevnitskaya.instaclientapp.data.entities.Profile
 import com.drevnitskaya.instaclientapp.domain.GetMoreFeedUseCase
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
 import com.drevnitskaya.instaclientapp.domain.LoadInitialFeedUseCase

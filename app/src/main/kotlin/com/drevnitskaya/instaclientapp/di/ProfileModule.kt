@@ -14,8 +14,8 @@ import org.koin.dsl.module
 val profileModule = module {
     factory<ProfileRepository> {
         ProfileRepositoryImpl(
-            authLocalRepository = get(),
-            remoteDataSource = get()
+            tokenLocalDataSource = get(),
+            profileRemoteDataSource = get()
         )
     }
 
@@ -23,8 +23,8 @@ val profileModule = module {
 
     factory<FeedRepository> {
         FeedRepositoryImpl(
-            authLocalRepository = get(),
-            remoteDataSource = get()
+            tokenLocalDataSource = get(),
+            feedRemoteDataSource = get()
         )
     }
 
@@ -32,7 +32,7 @@ val profileModule = module {
 
     factory<GetMoreFeedUseCase> { GetMoreFeedUseCaseImpl(feedRepository = get()) }
 
-    factory<LogoutUseCase> { LogoutUseCaseImpl(profileRepository = get()) }
+    factory<LogoutUseCase> { LogoutUseCaseImpl(authRepository = get()) }
 
     viewModel {
         ProfileViewModel(

@@ -1,8 +1,8 @@
 package com.drevnitskaya.instaclientapp.domain
 
 import com.drevnitskaya.instaclientapp.data.Result
-import com.drevnitskaya.instaclientapp.data.source.remote.api.DataResponse
-import com.drevnitskaya.instaclientapp.data.source.remote.api.FeedItem
+import com.drevnitskaya.instaclientapp.data.entities.DataResponse
+import com.drevnitskaya.instaclientapp.data.entities.FeedItem
 import com.drevnitskaya.instaclientapp.data.repository.FeedRepository
 
 interface LoadInitialFeedUseCase {
@@ -14,7 +14,7 @@ class LoadInitialFeedUseCaseImpl(
 ) : LoadInitialFeedUseCase {
     override suspend fun execute(): Result<DataResponse<List<FeedItem>>> {
         return try {
-            val result = feedRepository.getRemoteInitialFeed()
+            val result = feedRepository.loadInitialFeed()
             Result.Success(result)
         } catch (ex: Exception) {
             Result.Error(ex)

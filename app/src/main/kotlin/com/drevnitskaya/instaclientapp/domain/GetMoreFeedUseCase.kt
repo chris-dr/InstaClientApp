@@ -1,8 +1,8 @@
 package com.drevnitskaya.instaclientapp.domain
 
 import com.drevnitskaya.instaclientapp.data.Result
-import com.drevnitskaya.instaclientapp.data.source.remote.api.DataResponse
-import com.drevnitskaya.instaclientapp.data.source.remote.api.FeedItem
+import com.drevnitskaya.instaclientapp.data.entities.DataResponse
+import com.drevnitskaya.instaclientapp.data.entities.FeedItem
 import com.drevnitskaya.instaclientapp.data.repository.FeedRepository
 import java.lang.Exception
 
@@ -15,7 +15,7 @@ class GetMoreFeedUseCaseImpl(
 ) : GetMoreFeedUseCase {
     override suspend fun execute(nextUrl: String): Result<DataResponse<List<FeedItem>>> {
         return try {
-            val result = feedRepository.getRemoteMoreFeed(nextUrl)
+            val result = feedRepository.loadMoreFeed(nextUrl)
             Result.Success(result)
         } catch (ex: Exception) {
             Result.Error(ex)

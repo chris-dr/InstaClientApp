@@ -1,7 +1,7 @@
 package com.drevnitskaya.instaclientapp.domain
 
 import com.drevnitskaya.instaclientapp.data.Result
-import com.drevnitskaya.instaclientapp.data.source.remote.api.Profile
+import com.drevnitskaya.instaclientapp.data.entities.Profile
 import com.drevnitskaya.instaclientapp.data.repository.ProfileRepository
 import java.lang.Exception
 

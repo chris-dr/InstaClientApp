@@ -1,28 +1,20 @@
 package com.drevnitskaya.instaclientapp.data.repository
 
-import android.webkit.CookieManager
-import com.drevnitskaya.instaclientapp.data.source.remote.api.DataResponse
-import com.drevnitskaya.instaclientapp.data.source.remote.api.InstaApiInterface
-import com.drevnitskaya.instaclientapp.data.source.remote.api.Profile
-import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepository
+import com.drevnitskaya.instaclientapp.data.entities.DataResponse
+import com.drevnitskaya.instaclientapp.data.source.remote.RemoteDataSource
+import com.drevnitskaya.instaclientapp.data.entities.Profile
+import com.drevnitskaya.instaclientapp.data.source.local.TokenLocalDataSource
 
 interface ProfileRepository {
     suspend fun getProfile(): DataResponse<Profile>
-
-    suspend fun logout()
 }
 
 class ProfileRepositoryImpl(
-    private val authLocalRepository: AuthLocalRepository,
-    private val remoteDataSource: InstaApiInterface
+    private val tokenLocalDataSource: TokenLocalDataSource,
+    private val profileRemoteDataSource: RemoteDataSource
 ) : ProfileRepository {
     override suspend fun getProfile(): DataResponse<Profile> {
-        val token = authLocalRepository.token
-        return remoteDataSource.getProfile(token)
-    }
-
-    override suspend fun logout() {
-        authLocalRepository.token = ""
-        CookieManager.getInstance().removeAllCookies(null)
+        val token = tokenLocalDataSource.token
+        return profileRemoteDataSource.getProfile(token)
     }
 }
