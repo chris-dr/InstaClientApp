@@ -45,18 +45,18 @@ class LoginWebActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel.apply {
             showProgress.observe(this@LoginWebActivity, Observer { shouldShow ->
-                loginProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
+                loginWebProgress.visibility = if (shouldShow) View.VISIBLE else View.GONE
             })
             loadLoginForm.observe(this@LoginWebActivity, Observer { url ->
                 loginWebView.loadUrl(url)
             })
             showLoginForm.observe(this@LoginWebActivity, Observer { shouldShow ->
-                TransitionManager.beginDelayedTransition(webLoginRoot)
+                TransitionManager.beginDelayedTransition(loginWebRoot)
                 loginWebView.visibility = if (shouldShow) View.VISIBLE else View.GONE
             })
             showErrorState.observe(this@LoginWebActivity, Observer { shouldShow ->
                 loginWebErrorState.visibility = if (shouldShow) {
-                    TransitionManager.beginDelayedTransition(webLoginRoot)
+                    TransitionManager.beginDelayedTransition(loginWebRoot)
                     View.VISIBLE
                 } else {
                     View.GONE
@@ -72,12 +72,12 @@ class LoginWebActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initViews() {
-        setSupportActionBar(loginToolbar)
+        setSupportActionBar(loginWebToolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setTitle(R.string.shared_login)
         }
-        loginToolbar.setNavigationOnClickListener { onBackPressed() }
+        loginWebToolbar.setNavigationOnClickListener { onBackPressed() }
 
         loginWebView.settings.apply {
             javaScriptEnabled = true

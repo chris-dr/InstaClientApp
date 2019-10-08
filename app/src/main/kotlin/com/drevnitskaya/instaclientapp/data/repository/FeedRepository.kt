@@ -5,16 +5,24 @@ import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
 import com.drevnitskaya.instaclientapp.data.remote.api.FeedItem
 import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepository
 
+private const val FEED_PAGE_SIZE = 8
+
 interface FeedRepository {
-    suspend fun getRemoteFeed(): DataResponse<List<FeedItem>>
+    suspend fun getRemoteInitialFeed(): DataResponse<List<FeedItem>>
+
+    suspend fun getRemoteMoreFeed(nextUrl: String): DataResponse<List<FeedItem>>
 }
 
 class FeedRepositoryImpl(
     private val authLocalRepository: AuthLocalRepository,
     private val remoteDataSource: InstaApiInterface
 ) : FeedRepository {
-    override suspend fun getRemoteFeed(): DataResponse<List<FeedItem>> {
+    override suspend fun getRemoteInitialFeed(): DataResponse<List<FeedItem>> {
         val token = authLocalRepository.token
-        return remoteDataSource.getFeed(token = token, maxId = 0, minId = 0, count = 10)
+        return remoteDataSource.getInitialFeed(token = token, count = FEED_PAGE_SIZE)
+    }
+
+    override suspend fun getRemoteMoreFeed(nextUrl: String): DataResponse<List<FeedItem>> {
+        return remoteDataSource.getMoreFeed(nextUrl)
     }
 }

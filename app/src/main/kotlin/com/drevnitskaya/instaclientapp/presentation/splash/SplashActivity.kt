@@ -7,7 +7,6 @@ import com.drevnitskaya.instaclientapp.presentation.login.LoginActivity
 import com.drevnitskaya.instaclientapp.presentation.profile.ProfileActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class SplashActivity : AppCompatActivity() {
     private val viewModel: SplashViewModel by viewModel()
 

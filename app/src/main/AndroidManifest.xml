@@ -27,16 +27,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme" />
         <activity
-            android:name=".presentation.main.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".presentation.login.LoginWebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ProfileTheme" />
+            android:theme="@style/InstaClientTheme" />
         <activity
             android:name=".presentation.profile.ProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ProfileTheme" />
+            android:theme="@style/InstaClientTheme" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -21,10 +21,11 @@ interface InstaApiInterface {
     suspend fun getProfile(@Query("access_token") token: String): DataResponse<Profile>
 
     @GET("v1/users/self/media/recent/")
-    suspend fun getFeed(
+    suspend fun getInitialFeed(
         @Query("access_token") token: String,
-        @Query("max_id") maxId: Int,
-        @Query("min_id") minId: Int,
         @Query("count") count: Int
     ): DataResponse<List<FeedItem>>
+
+    @GET
+    suspend fun getMoreFeed(@Url nextUrl: String): DataResponse<List<FeedItem>>
 }

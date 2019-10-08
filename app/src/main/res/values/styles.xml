@@ -17,7 +17,7 @@
         <item name="colorPrimaryDark">@android:color/transparent</item>
     </style>
 
-    <style name="ProfileTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="InstaClientTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="colorPrimaryDark">@color/beautyBush</item>
@@ -72,8 +72,15 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Button" parent="android:TextAppearance.Material.Button">
+    <style name="Button" parent="Widget.MaterialComponents.Button">
         <item name="android:fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+
+    </style>
+
+    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -103,6 +110,10 @@
     </style>
 
     <style name="Button.WoodyBrownText">
+        <item name="android:textColor">@color/woodyBrown</item>
+    </style>
+
+    <style name="TextButton.WoodyBrownText">
         <item name="android:textColor">@color/woodyBrown</item>
     </style>
 

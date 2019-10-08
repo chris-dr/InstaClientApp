@@ -13,12 +13,17 @@ import com.drevnitskaya.instaclientapp.data.remote.api.Profile
 import com.drevnitskaya.instaclientapp.extensions.loadImage
 import com.drevnitskaya.instaclientapp.extensions.showSnackbar
 import com.drevnitskaya.instaclientapp.presentation.login.LoginActivity
+import com.drevnitskaya.instaclientapp.presentation.profile.adapter.FeedAdapter
+import com.drevnitskaya.instaclientapp.presentation.profile.adapter.PaginationListener
 import kotlinx.android.synthetic.main.activity_profile.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+
 class ProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
-    private val adapterMedia = FeedAdapter()
+    private val adapterMedia = FeedAdapter(onRetryClicked = {
+        viewModel.loadMoreFeed()
+    })
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -35,8 +40,26 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initViews() {
         profileFeed.apply {
-            layoutManager = GridLayoutManager(context, 2)
+            val glm = GridLayoutManager(context, 2)
+            glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (adapterMedia.getItemViewType(position)) {
+                        FeedAdapter.FeetItemType.FEED_ITEM.value -> 1
+                        else -> 2
+                    }
+                }
+            }
+            layoutManager = glm
             adapter = adapterMedia
+            addOnScrollListener(
+                PaginationListener(layoutManager = glm,
+                    onShouldLoadMore = { localVisibleRectBottomPosition, itemHeight ->
+                        viewModel.loadMoreFeedIfNeeded(localVisibleRectBottomPosition, itemHeight)
+                    })
+            )
+        }
+        profileErrorState.onRetryClicked = {
+            viewModel.loadProfileContent()
         }
         profileLogout.setOnClickListener {
             viewModel.logout()
@@ -58,6 +81,12 @@ class ProfileActivity : AppCompatActivity() {
             })
             showFeed.observe(this@ProfileActivity, Observer { feed ->
                 adapterMedia.feed = feed
+            })
+            showLoadMoreFeed.observe(this@ProfileActivity, Observer { shouldShow ->
+                adapterMedia.showLoadMore = shouldShow
+            })
+            showLoadMoreError.observe(this@ProfileActivity, Observer { shouldShow ->
+                adapterMedia.showLoadMoreError = shouldShow
             })
             openLogin.observe(this@ProfileActivity, Observer {
                 val intent = LoginActivity.getStartIntent(this@ProfileActivity)
