@@ -22,7 +22,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModel()
-    private val adapterMedia = FeedAdapter(onRetryClicked = {
+    private val adapterFeed = FeedAdapter(onRetryClicked = {
         viewModel.loadMoreFeed()
     })
 
@@ -44,14 +44,14 @@ class ProfileActivity : AppCompatActivity() {
             val glm = GridLayoutManager(context, 2)
             glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    return when (adapterMedia.getItemViewType(position)) {
+                    return when (adapterFeed.getItemViewType(position)) {
                         FeedAdapter.FeetItemType.FEED_ITEM.value -> 1
                         else -> 2
                     }
                 }
             }
             layoutManager = glm
-            adapter = adapterMedia
+            adapter = adapterFeed
             addOnScrollListener(
                 PaginationListener(layoutManager = glm,
                     onShouldLoadMore = { localVisibleRectBottomPosition, itemHeight ->
@@ -97,7 +97,7 @@ class ProfileActivity : AppCompatActivity() {
                 setProfileContentVisibility(visibility)
             })
             showFeed.observe(this@ProfileActivity, Observer { feed ->
-                adapterMedia.feed = feed
+                adapterFeed.feed = feed
             })
             showEmptyFeedState.observe(this@ProfileActivity, Observer { shouldShow ->
                 showNoFeedMessage(shouldShow, R.string.profile_emptyFeed)
@@ -109,10 +109,10 @@ class ProfileActivity : AppCompatActivity() {
                 showSnackbar(profileRoot, getString(R.string.profile_offlineMode))
             })
             showLoadMoreFeed.observe(this@ProfileActivity, Observer { shouldShow ->
-                adapterMedia.showLoadMore = shouldShow
+                adapterFeed.showLoadMore = shouldShow
             })
             showLoadMoreError.observe(this@ProfileActivity, Observer { shouldShow ->
-                adapterMedia.showLoadMoreError = shouldShow
+                adapterFeed.showLoadMoreError = shouldShow
             })
             openLogin.observe(this@ProfileActivity, Observer {
                 val intent = LoginActivity.getStartIntent(this@ProfileActivity)
