@@ -1,6 +1,6 @@
 package com.drevnitskaya.instaclientapp.domain.auth
 
-import com.drevnitskaya.instaclientapp.data.source.local.TokenLocalDataSource
+import com.drevnitskaya.instaclientapp.data.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -9,11 +9,11 @@ interface CheckAuthStateUseCase {
 }
 
 class CheckAuthStateUseCaseImpl(
-    private val tokenLocalDataSource: TokenLocalDataSource
+    private val authRepository: AuthRepository
 ) : CheckAuthStateUseCase {
     override suspend fun execute(): Boolean {
         return withContext(Dispatchers.IO) {
-            tokenLocalDataSource.token.isNotEmpty()
+            authRepository.isUserLoggedIn()
         }
     }
 }

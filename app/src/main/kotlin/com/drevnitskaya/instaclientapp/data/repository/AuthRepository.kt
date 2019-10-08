@@ -9,6 +9,8 @@ import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
 interface AuthRepository {
     suspend fun getAccessToken(authCode: String): TokenResponse
 
+    fun isUserLoggedIn(): Boolean
+
     fun saveToken(token: String)
 
     fun clearToken()
@@ -27,6 +29,10 @@ class AuthRepositoryImpl(
             redirectUri = AUTH_REDIRECT_URL,
             code = authCode
         )
+    }
+
+    override fun isUserLoggedIn(): Boolean {
+        return tokenLocalDataSource.token.isNotBlank()
     }
 
     override fun saveToken(token: String) {

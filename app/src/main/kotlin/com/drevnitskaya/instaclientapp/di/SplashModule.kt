@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val splashModule = module {
     factory<CheckAuthStateUseCase> {
-        CheckAuthStateUseCaseImpl(tokenLocalDataSource = get())
+        CheckAuthStateUseCaseImpl(authRepository = get())
     }
     viewModel { SplashViewModel(checkAuthStateUseCase = get()) }
 }
