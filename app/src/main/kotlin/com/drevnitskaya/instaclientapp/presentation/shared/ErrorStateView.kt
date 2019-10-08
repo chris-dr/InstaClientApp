@@ -29,5 +29,4 @@ class ErrorStateView : FrameLayout {
             onRetryClicked?.invoke()
         }
     }
-
 }
