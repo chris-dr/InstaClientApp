@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionManager
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -82,6 +83,12 @@ class ProfileActivity : AppCompatActivity() {
             showFeed.observe(this@ProfileActivity, Observer { feed ->
                 adapterMedia.feed = feed
             })
+            showEmptyFeedState.observe(this@ProfileActivity, Observer { shouldShow ->
+                showNoFeedMessage(shouldShow, R.string.profile_emptyFeed)
+            })
+            showFeedErrorState.observe(this@ProfileActivity, Observer { shouldShow ->
+                showNoFeedMessage(shouldShow, R.string.profile_loadFeedError)
+            })
             showCachedDataMessage.observe(this@ProfileActivity, Observer {
                 showSnackbar(profileRoot, getString(R.string.profile_dataFromCache))
             })
@@ -117,5 +124,15 @@ class ProfileActivity : AppCompatActivity() {
         profileBio.text = profile.bio
         profileFollowersCount.text = "${profile.counts?.follows ?: 0}"
         profileFollowingCount.text = "${profile.counts?.followedBy ?: 0}"
+    }
+
+    private fun showNoFeedMessage(shouldShow: Boolean, @StringRes msgResId: Int? = null) {
+        profileNoFeedMessage.visibility = if (shouldShow && msgResId != null) {
+            profileNoFeedMessage.text = getString(msgResId)
+            TransitionManager.beginDelayedTransition(profileRoot)
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 }

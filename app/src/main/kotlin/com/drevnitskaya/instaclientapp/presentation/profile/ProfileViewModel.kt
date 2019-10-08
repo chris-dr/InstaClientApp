@@ -19,13 +19,15 @@ private const val VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT = 0.85
 class ProfileViewModel(
     private val networkStateProvider: NetworkStateProvider,
     private val getProfileUseCase: GetProfileUseCase,
-    private val loadFeedUseCase: LoadInitialFeedUseCase,
+    private val loadInitialFeedUseCase: LoadInitialFeedUseCase,
     private val loadMoreFeedUseCase: LoadMoreFeedUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     val showProgress = MutableLiveData<Boolean>()
     val showUserInfo = MutableLiveData<Profile>()
     val showFeed = MutableLiveData<List<FeedItem>>()
+    val showEmptyFeedState = MutableLiveData<Boolean>()
+    val showFeedErrorState = MutableLiveData<Boolean>()
     val openLogin = SingleLiveEvent<Nothing>()
     val showLogoutFailed = SingleLiveEvent<Nothing>()
     val showErrorState = MutableLiveData<Boolean>()
@@ -43,7 +45,7 @@ class ProfileViewModel(
             showErrorState.value = false
             showProgress.value = true
             val profileAsync = async { getProfileUseCase.execute() }
-            val feedAsync = async { loadFeedUseCase.execute() }
+            val feedAsync = async { loadInitialFeedUseCase.execute() }
 
             val profileResult = profileAsync.await()
             val feedResult = feedAsync.await()
@@ -113,9 +115,6 @@ class ProfileViewModel(
                 }
             }
             is Result.Error -> {
-                //todo: remove
-                result.exception.printStackTrace()
-
                 showErrorState.value = true
             }
         }
@@ -125,21 +124,20 @@ class ProfileViewModel(
         when (result) {
             is Result.Success -> {
                 val feedWrapper = result.data
-
                 val feed = result.data?.feed
-                //TODO: Check that feed is not empty!
-                showFeed.value = feed
-
-                if (feedWrapper?.fromCache == false) {
-                    nextFeedUrl = feedWrapper.nextUrl
+                if (feed.isNullOrEmpty().not()) {
+                    showFeed.value = feed
+                    if (feedWrapper?.fromCache == false) {
+                        nextFeedUrl = feedWrapper.nextUrl
+                    }
+                } else {
+                    showEmptyFeedState.value = true
                 }
             }
             is Result.Error -> {
                 showProgress.value = false
-                //TODO: make some state for feed only!
-//                showErrorState.value = true
+                showFeedErrorState.value = true
             }
-
         }
     }
 }

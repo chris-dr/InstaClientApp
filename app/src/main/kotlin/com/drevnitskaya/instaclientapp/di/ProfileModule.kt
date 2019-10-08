@@ -47,7 +47,7 @@ val profileModule = module {
         ProfileViewModel(
             networkStateProvider = get(),
             getProfileUseCase = get(),
-            loadFeedUseCase = get(),
+            loadInitialFeedUseCase = get(),
             loadMoreFeedUseCase = get(),
             logoutUseCase = get()
         )
