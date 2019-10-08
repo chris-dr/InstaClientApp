@@ -14,4 +14,7 @@ interface FeedLocalDataSource {
 
     @Query("SELECT * FROM $TABLE_NAME_FEED")
     suspend fun getFeed(): List<FeedItem>
+
+    @Query("DELETE FROM $TABLE_NAME_FEED")
+    suspend fun clearFeed()
 }

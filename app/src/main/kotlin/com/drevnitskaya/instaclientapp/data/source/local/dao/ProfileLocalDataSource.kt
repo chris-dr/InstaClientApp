@@ -1,9 +1,6 @@
 package com.drevnitskaya.instaclientapp.data.source.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.drevnitskaya.instaclientapp.data.entities.Profile
 import com.drevnitskaya.instaclientapp.framework.db.TABLE_NAME_PROFILE
 
@@ -14,4 +11,7 @@ interface ProfileLocalDataSource {
 
     @Query("SELECT * FROM $TABLE_NAME_PROFILE")
     suspend fun getProfile(): List<Profile>
+
+    @Query("DELETE FROM $TABLE_NAME_PROFILE")
+    suspend fun clear()
 }

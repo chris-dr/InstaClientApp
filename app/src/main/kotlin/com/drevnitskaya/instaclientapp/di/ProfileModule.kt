@@ -41,7 +41,13 @@ val profileModule = module {
 
     factory<LoadMoreFeedUseCase> { LoadMoreFeedUseCaseImpl(feedRepository = get()) }
 
-    factory<LogoutUseCase> { LogoutUseCaseImpl(authRepository = get()) }
+    factory<LogoutUseCase> {
+        LogoutUseCaseImpl(
+            authRepository = get(),
+            profileRepository = get(),
+            feedRepository = get()
+        )
+    }
 
     viewModel {
         ProfileViewModel(

@@ -8,6 +8,8 @@ import com.drevnitskaya.instaclientapp.data.source.local.dao.ProfileLocalDataSou
 
 interface ProfileRepository {
     suspend fun getProfile(forceUpdate: Boolean = false): ProfileWrapper
+
+    suspend fun removeProfile()
 }
 
 class ProfileRepositoryImpl(
@@ -27,7 +29,10 @@ class ProfileRepositoryImpl(
         if (remoteProfile == null) {
             Log.w(javaClass.canonicalName, "Remote data source fetch failed")
         } else {
-            profileLocalDataSource.saveProfile(remoteProfile)
+            profileLocalDataSource.apply {
+                clear()
+                saveProfile(remoteProfile)
+            }
             return ProfileWrapper(profile = remoteProfile)
         }
 
@@ -46,5 +51,9 @@ class ProfileRepositoryImpl(
         } else {
             throw Exception("Error fetching from remote and local")
         }
+    }
+
+    override suspend fun removeProfile() {
+        profileLocalDataSource.clear()
     }
 }

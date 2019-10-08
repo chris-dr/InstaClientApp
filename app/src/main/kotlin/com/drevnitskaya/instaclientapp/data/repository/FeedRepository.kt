@@ -12,6 +12,8 @@ interface FeedRepository {
     suspend fun loadInitialFeed(): FeedWrapper
 
     suspend fun loadMoreFeed(nextUrl: String): FeedWrapper
+
+    suspend fun removeFeed()
 }
 
 class FeedRepositoryImpl(
@@ -33,7 +35,10 @@ class FeedRepositoryImpl(
             Log.w(javaClass.canonicalName, "Remote data source fetch failed")
         } else {
             val remoteFeed = remoteFeedResponse.data
-            feedLocalDataSource.saveFeed(remoteFeed)
+            feedLocalDataSource.apply {
+                clearFeed()
+                saveFeed(remoteFeed)
+            }
             return FeedWrapper(feed = remoteFeed, nextUrl = remoteFeedResponse.pagination?.nextUrl)
         }
 
@@ -53,5 +58,9 @@ class FeedRepositoryImpl(
     override suspend fun loadMoreFeed(nextUrl: String): FeedWrapper {
         val response = feedRemoteDataSource.getMoreFeed(nextUrl)
         return FeedWrapper(feed = response.data, nextUrl = response.pagination?.nextUrl)
+    }
+
+    override suspend fun removeFeed() {
+        feedLocalDataSource.clearFeed()
     }
 }
