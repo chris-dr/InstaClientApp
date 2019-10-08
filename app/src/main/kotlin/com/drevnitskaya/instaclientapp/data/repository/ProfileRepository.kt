@@ -7,7 +7,7 @@ import com.drevnitskaya.instaclientapp.data.source.local.TokenLocalDataSource
 import com.drevnitskaya.instaclientapp.data.source.local.dao.ProfileLocalDataSource
 
 interface ProfileRepository {
-    suspend fun getProfile(forceUpdate: Boolean = false): ProfileWrapper
+    suspend fun getProfile(): ProfileWrapper
 
     suspend fun removeProfile()
 }
@@ -18,7 +18,7 @@ class ProfileRepositoryImpl(
     private val profileLocalDataSource: ProfileLocalDataSource
 ) : ProfileRepository {
 
-    override suspend fun getProfile(forceUpdate: Boolean): ProfileWrapper {
+    override suspend fun getProfile(): ProfileWrapper {
         val remoteProfile = try {
             val token = tokenLocalDataSource.token
             profileRemoteDataSource.getProfile(token).data
@@ -34,10 +34,6 @@ class ProfileRepositoryImpl(
                 saveProfile(remoteProfile)
             }
             return ProfileWrapper(profile = remoteProfile)
-        }
-
-        if (forceUpdate) {
-            throw Exception("Refresh failed")
         }
 
         val localProfile = try {
