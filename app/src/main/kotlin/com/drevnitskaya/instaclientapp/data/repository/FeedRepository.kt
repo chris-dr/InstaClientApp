@@ -1,8 +1,8 @@
 package com.drevnitskaya.instaclientapp.data.repository
 
-import com.drevnitskaya.instaclientapp.data.remote.api.DataResponse
-import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
-import com.drevnitskaya.instaclientapp.data.remote.api.FeedItem
+import com.drevnitskaya.instaclientapp.data.source.remote.api.DataResponse
+import com.drevnitskaya.instaclientapp.data.source.remote.api.InstaApiInterface
+import com.drevnitskaya.instaclientapp.data.source.remote.api.FeedItem
 import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepository
 
 private const val FEED_PAGE_SIZE = 8

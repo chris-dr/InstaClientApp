@@ -28,7 +28,7 @@ val profileModule = module {
         )
     }
 
-    factory<GetRemoteFeedUseCase> { GetRemoteFeedUseCaseImpl(feedRepository = get()) }
+    factory<LoadInitialFeedUseCase> { LoadInitialFeedUseCaseImpl(feedRepository = get()) }
 
     factory<GetMoreFeedUseCase> { GetMoreFeedUseCaseImpl(feedRepository = get()) }
 

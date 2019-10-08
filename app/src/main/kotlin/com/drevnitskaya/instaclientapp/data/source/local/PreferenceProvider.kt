@@ -1,4 +1,4 @@
-package com.drevnitskaya.instaclientapp.data.local
+package com.drevnitskaya.instaclientapp.data.source.local
 
 import android.content.Context
 import android.preference.PreferenceManager

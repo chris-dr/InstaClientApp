@@ -1,23 +1,24 @@
 package com.drevnitskaya.instaclientapp.domain
 
-import com.drevnitskaya.instaclientapp.data.remote.api.Profile
+import com.drevnitskaya.instaclientapp.data.Result
+import com.drevnitskaya.instaclientapp.data.source.remote.api.Profile
 import com.drevnitskaya.instaclientapp.data.repository.ProfileRepository
 import java.lang.Exception
 
 interface GetProfileUseCase {
-    suspend fun execute(): UseCaseResult<Profile>
+    suspend fun execute(): Result<Profile>
 }
 
 class GetProfileUseCaseImpl(
     private val profileRepository: ProfileRepository
 ) : GetProfileUseCase {
-    override suspend fun execute(): UseCaseResult<Profile> {
+    override suspend fun execute(): Result<Profile> {
         return try {
             val profile = profileRepository.getProfile().data
             //TODO: Save it locally
-            UseCaseResult.Success(profile)
+            Result.Success(profile)
         } catch (ex: Exception) {
-            UseCaseResult.Error(ex)
+            Result.Error(ex)
         }
     }
 }

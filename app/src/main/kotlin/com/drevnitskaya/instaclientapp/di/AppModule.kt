@@ -1,9 +1,9 @@
 package com.drevnitskaya.instaclientapp.di
 
 import com.drevnitskaya.instaclientapp.BuildConfig
-import com.drevnitskaya.instaclientapp.data.local.PreferenceProvider
-import com.drevnitskaya.instaclientapp.data.local.SharedPreferenceProvider
-import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
+import com.drevnitskaya.instaclientapp.data.source.local.PreferenceProvider
+import com.drevnitskaya.instaclientapp.data.source.local.SharedPreferenceProvider
+import com.drevnitskaya.instaclientapp.data.source.remote.api.InstaApiInterface
 import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepository
 import com.drevnitskaya.instaclientapp.data.repository.auth.AuthLocalRepositoryImpl
 import com.drevnitskaya.instaclientapp.framework.api.BaseOkHttpClientBuilder

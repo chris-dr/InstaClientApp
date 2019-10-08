@@ -3,7 +3,7 @@ package com.drevnitskaya.instaclientapp.presentation.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.drevnitskaya.instaclientapp.domain.UseCaseResult
+import com.drevnitskaya.instaclientapp.data.Result
 import com.drevnitskaya.instaclientapp.domain.auth.ComposeAuthUrlUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.GetAccessTokenUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.ParseAuthCodeUseCase
@@ -39,11 +39,11 @@ class LoginWebViewModel(
         if (redirectUrl?.startsWith(AUTH_REDIRECT_URL) == true) {
             viewModelScope.launch {
                 when (val authCodeResult = parseAuthCodeUseCase.execute(redirectUrl)) {
-                    is UseCaseResult.Success -> {
+                    is Result.Success<String> -> {
                         val authCode = authCodeResult.data
                         getToken(authCode)
                     }
-                    is UseCaseResult.Error -> {
+                    is Result.Error -> {
                         showErrorState.value = true
                     }
                 }
@@ -84,8 +84,8 @@ class LoginWebViewModel(
     private suspend fun getToken(authCode: String?) {
         authCode?.let { code ->
             when (getAccessTokenUseCase.execute(code)) {
-                is UseCaseResult.Complete -> openProfile.call()
-                is UseCaseResult.Error -> showErrorState.value = true
+                is Result.Complete -> openProfile.call()
+                is Result.Error -> showErrorState.value = true
                 else -> {
                     //do nothing;
                 }

@@ -1,8 +1,8 @@
 package com.drevnitskaya.instaclientapp.data.repository.auth
 
 import com.drevnitskaya.instaclientapp.BuildConfig
-import com.drevnitskaya.instaclientapp.data.remote.api.InstaApiInterface
-import com.drevnitskaya.instaclientapp.data.remote.api.auth.entities.TokenResponse
+import com.drevnitskaya.instaclientapp.data.source.remote.api.InstaApiInterface
+import com.drevnitskaya.instaclientapp.data.source.remote.api.auth.entities.TokenResponse
 import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
 
 interface AuthRemoteRepository {

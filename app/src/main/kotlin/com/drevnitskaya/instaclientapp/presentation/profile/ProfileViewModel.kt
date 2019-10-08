@@ -3,12 +3,12 @@ package com.drevnitskaya.instaclientapp.presentation.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.drevnitskaya.instaclientapp.data.remote.api.FeedItem
-import com.drevnitskaya.instaclientapp.data.remote.api.Profile
+import com.drevnitskaya.instaclientapp.data.source.remote.api.FeedItem
+import com.drevnitskaya.instaclientapp.data.source.remote.api.Profile
 import com.drevnitskaya.instaclientapp.domain.GetMoreFeedUseCase
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
-import com.drevnitskaya.instaclientapp.domain.GetRemoteFeedUseCase
-import com.drevnitskaya.instaclientapp.domain.UseCaseResult
+import com.drevnitskaya.instaclientapp.domain.LoadInitialFeedUseCase
+import com.drevnitskaya.instaclientapp.data.Result
 import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
 import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
@@ -20,7 +20,7 @@ private const val VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT = 0.85
 class ProfileViewModel(
     private val networkStateProvider: NetworkStateProvider,
     private val getProfileUseCase: GetProfileUseCase,
-    private val getFeedUseCase: GetRemoteFeedUseCase,
+    private val getFeedUseCase: LoadInitialFeedUseCase,
     private val getMoreFeedUseCase: GetMoreFeedUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
@@ -48,7 +48,7 @@ class ProfileViewModel(
             val profileResult = profileAsync.await()
             val feedResult = feedAsync.await()
 
-            if (profileResult is UseCaseResult.Success && feedResult is UseCaseResult.Success) {
+            if (profileResult is Result.Success && feedResult is Result.Success) {
                 val profile = profileResult.data
                 val feed = feedResult.data?.data
                 nextFeedUrl = feedResult.data?.pagination?.nextUrl
@@ -81,7 +81,7 @@ class ProfileViewModel(
             showLoadMoreError.value = false
             showLoadMoreFeed.value = true
             when (val result = getMoreFeedUseCase.execute(nextFeedUrl!!)) {
-                is UseCaseResult.Success -> {
+                is Result.Success -> {
                     val newItems = result.data?.data
 
                     if (newItems.isNullOrEmpty().not()) {
@@ -105,8 +105,8 @@ class ProfileViewModel(
     fun logout() {
         viewModelScope.launch {
             when (logoutUseCase.execute()) {
-                is UseCaseResult.Complete -> openLogin.call()
-                is UseCaseResult.Error -> showLogoutFailed.call()
+                is Result.Complete -> openLogin.call()
+                is Result.Error -> showLogoutFailed.call()
             }
         }
     }

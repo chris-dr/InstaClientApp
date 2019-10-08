@@ -1,6 +1,6 @@
-package com.drevnitskaya.instaclientapp.data.remote.api
+package com.drevnitskaya.instaclientapp.data.source.remote.api
 
-import com.drevnitskaya.instaclientapp.data.remote.api.auth.entities.TokenResponse
+import com.drevnitskaya.instaclientapp.data.source.remote.api.auth.entities.TokenResponse
 import retrofit2.http.*
 
 interface InstaApiInterface {
