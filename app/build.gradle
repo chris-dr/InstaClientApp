@@ -43,13 +43,12 @@ dependencies {
 
     implementation ext.ktx
 
-    implementation arch
-    implementation arch_viewmodel_ktx
+    implementation ext.arch
+    implementation ext.arch_viewmodel_ktx
 
     implementation ext.koin
     implementation ext.koin_viewmodel
 
-    implementation ext.coroutines
     implementation ext.retrofit.retrofit
     implementation ext.retrofit.converter_gson
     implementation ext.logging_interceptor
@@ -58,7 +57,8 @@ dependencies {
     kapt ext.glide_kapt
     implementation rounded_imageview
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation ext.testing.junit
+    testImplementation ext.testing.arch
+    testImplementation ext.testing.mockito_kotlin2
+    testImplementation ext.testing.coroutines
 }
