@@ -3,14 +3,11 @@ package com.drevnitskaya.instaclientapp.presentation.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.drevnitskaya.instaclientapp.data.entities.FeedItem
-import com.drevnitskaya.instaclientapp.data.entities.Profile
-import com.drevnitskaya.instaclientapp.domain.GetMoreFeedUseCase
+import com.drevnitskaya.instaclientapp.domain.LoadMoreFeedUseCase
 import com.drevnitskaya.instaclientapp.domain.GetProfileUseCase
 import com.drevnitskaya.instaclientapp.domain.LoadInitialFeedUseCase
 import com.drevnitskaya.instaclientapp.data.Result
-import com.drevnitskaya.instaclientapp.data.entities.DATA_SOURCE_LOCAL
-import com.drevnitskaya.instaclientapp.data.entities.ProfileWrapper
+import com.drevnitskaya.instaclientapp.data.entities.*
 import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
 import com.drevnitskaya.instaclientapp.utils.NetworkStateProvider
 import com.drevnitskaya.instaclientapp.utils.SingleLiveEvent
@@ -22,8 +19,8 @@ private const val VISIBLE_PART_FROM_ITEM_HEIGHT_PERCENT = 0.85
 class ProfileViewModel(
     private val networkStateProvider: NetworkStateProvider,
     private val getProfileUseCase: GetProfileUseCase,
-    private val getFeedUseCase: LoadInitialFeedUseCase,
-    private val getMoreFeedUseCase: GetMoreFeedUseCase,
+    private val loadFeedUseCase: LoadInitialFeedUseCase,
+    private val loadMoreFeedUseCase: LoadMoreFeedUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     val showProgress = MutableLiveData<Boolean>()
@@ -46,27 +43,13 @@ class ProfileViewModel(
             showErrorState.value = false
             showProgress.value = true
             val profileAsync = async { getProfileUseCase.execute() }
-//            val feedAsync = async { getFeedUseCase.execute() }
+            val feedAsync = async { loadFeedUseCase.execute() }
 
             val profileResult = profileAsync.await()
-//            val feedResult = feedAsync.await()
+            val feedResult = feedAsync.await()
 
             handleProfileResult(result = profileResult)
-
-            //TODO: Handle feed later
-            /*if (profileResult is Result.Success && feedResult is Result.Success) {
-                val profile = profileResult.data
-                val feed = feedResult.data?.data
-                nextFeedUrl = feedResult.data?.pagination?.nextUrl
-                showProgress.value = false
-                showUserInfo.value = profile
-                //todo: handle feed, can be empty!
-                showFeed.value = feed
-            } else {
-                (profileResult as Result.Error).exception.printStackTrace()
-                showProgress.value = false
-                showErrorState.value = true
-            }*/
+            handleFeedResult(result = feedResult)
         }
     }
 
@@ -87,16 +70,17 @@ class ProfileViewModel(
         viewModelScope.launch {
             showLoadMoreError.value = false
             showLoadMoreFeed.value = true
-            when (val result = getMoreFeedUseCase.execute(nextFeedUrl!!)) {
+            when (val result = loadMoreFeedUseCase.execute(nextFeedUrl!!)) {
                 is Result.Success -> {
-                    val newItems = result.data?.data
+                    val feedWrapper = result.data
+                    val newItems = feedWrapper?.feed
 
                     if (newItems.isNullOrEmpty().not()) {
                         val currFeed = showFeed.value?.toMutableList()
                         val tempList = currFeed?.apply {
                             addAll(newItems!!)
                         }
-                        nextFeedUrl = result.data?.pagination?.nextUrl
+                        nextFeedUrl = feedWrapper?.nextUrl
                         showLoadMoreFeed.value = false
                         showFeed.value = tempList
                     }
@@ -119,11 +103,12 @@ class ProfileViewModel(
     }
 
     private fun handleProfileResult(result: Result<ProfileWrapper>) {
+        showProgress.value = false
         when (result) {
             is Result.Success -> {
                 val profileWrapper = result.data
                 showUserInfo.value = profileWrapper?.profile
-                if (profileWrapper?.dataSource == DATA_SOURCE_LOCAL) {
+                if (profileWrapper?.fromCache == true) {
                     showCachedDataMessage.call()
                 }
             }
@@ -131,9 +116,30 @@ class ProfileViewModel(
                 //todo: remove
                 result.exception.printStackTrace()
 
-                showProgress.value = false
                 showErrorState.value = true
             }
+        }
+    }
+
+    private fun handleFeedResult(result: Result<FeedWrapper>) {
+        when (result) {
+            is Result.Success -> {
+                val feedWrapper = result.data
+
+                val feed = result.data?.feed
+                //TODO: Check that feed is not empty!
+                showFeed.value = feed
+
+                if (feedWrapper?.fromCache == false) {
+                    nextFeedUrl = feedWrapper.nextUrl
+                }
+            }
+            is Result.Error -> {
+                showProgress.value = false
+                //TODO: make some state for feed only!
+//                showErrorState.value = true
+            }
+
         }
     }
 }

@@ -1,8 +1,6 @@
 package com.drevnitskaya.instaclientapp.data.repository
 
 import android.util.Log
-import com.drevnitskaya.instaclientapp.data.entities.DATA_SOURCE_LOCAL
-import com.drevnitskaya.instaclientapp.data.entities.DATA_SOURCE_REMOTE
 import com.drevnitskaya.instaclientapp.data.source.remote.RemoteDataSource
 import com.drevnitskaya.instaclientapp.data.entities.ProfileWrapper
 import com.drevnitskaya.instaclientapp.data.source.local.TokenLocalDataSource
@@ -30,7 +28,7 @@ class ProfileRepositoryImpl(
             Log.w(javaClass.canonicalName, "Remote data source fetch failed")
         } else {
             profileLocalDataSource.saveProfile(remoteProfile)
-            return ProfileWrapper(profile = remoteProfile, dataSource = DATA_SOURCE_REMOTE)
+            return ProfileWrapper(profile = remoteProfile)
         }
 
         if (forceUpdate) {
@@ -44,7 +42,7 @@ class ProfileRepositoryImpl(
         }
 
         if (localProfile != null) {
-            return ProfileWrapper(profile = localProfile[0], dataSource = DATA_SOURCE_LOCAL)
+            return ProfileWrapper(profile = localProfile[0], fromCache = true)
         } else {
             throw Exception("Error fetching from remote and local")
         }

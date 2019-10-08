@@ -4,6 +4,7 @@ import com.drevnitskaya.instaclientapp.data.repository.FeedRepository
 import com.drevnitskaya.instaclientapp.data.repository.FeedRepositoryImpl
 import com.drevnitskaya.instaclientapp.data.repository.ProfileRepository
 import com.drevnitskaya.instaclientapp.data.repository.ProfileRepositoryImpl
+import com.drevnitskaya.instaclientapp.data.source.local.dao.FeedLocalDataSource
 import com.drevnitskaya.instaclientapp.data.source.local.dao.ProfileLocalDataSource
 import com.drevnitskaya.instaclientapp.domain.*
 import com.drevnitskaya.instaclientapp.domain.auth.LogoutUseCase
@@ -15,6 +16,8 @@ import org.koin.dsl.module
 
 val profileModule = module {
     single<ProfileLocalDataSource> { get<InstaAppDataBase>().profileDao() }
+
+    single<FeedLocalDataSource> { get<InstaAppDataBase>().feedDao() }
 
     factory<ProfileRepository> {
         ProfileRepositoryImpl(
@@ -29,13 +32,14 @@ val profileModule = module {
     factory<FeedRepository> {
         FeedRepositoryImpl(
             tokenLocalDataSource = get(),
-            feedRemoteDataSource = get()
+            feedRemoteDataSource = get(),
+            feedLocalDataSource = get()
         )
     }
 
     factory<LoadInitialFeedUseCase> { LoadInitialFeedUseCaseImpl(feedRepository = get()) }
 
-    factory<GetMoreFeedUseCase> { GetMoreFeedUseCaseImpl(feedRepository = get()) }
+    factory<LoadMoreFeedUseCase> { LoadMoreFeedUseCaseImpl(feedRepository = get()) }
 
     factory<LogoutUseCase> { LogoutUseCaseImpl(authRepository = get()) }
 
@@ -43,8 +47,8 @@ val profileModule = module {
         ProfileViewModel(
             networkStateProvider = get(),
             getProfileUseCase = get(),
-            getFeedUseCase = get(),
-            getMoreFeedUseCase = get(),
+            loadFeedUseCase = get(),
+            loadMoreFeedUseCase = get(),
             logoutUseCase = get()
         )
     }

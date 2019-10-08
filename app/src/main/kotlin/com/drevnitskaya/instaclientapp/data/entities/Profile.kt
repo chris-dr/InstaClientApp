@@ -27,10 +27,7 @@ data class Count(
     var followedBy: Int
 )
 
-const val DATA_SOURCE_REMOTE = 0
-const val DATA_SOURCE_LOCAL = 1
-
 data class ProfileWrapper(
     var profile: Profile? = null,
-    var dataSource: Int = DATA_SOURCE_REMOTE
+    var fromCache: Boolean = false
 )
