@@ -1,4 +1,5 @@
 # InstaClientApp (under development)
+Sample app to demonstrate my coding skills. 
 
 ### Technologies:
 - Architecture: MVVM with use of  AAC: LiveData, ViewModel;
