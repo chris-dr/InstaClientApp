@@ -26,14 +26,14 @@ class ProfileViewModel(
 ) : ViewModel() {
     val showProgress = MutableLiveData<Boolean>()
     val showRefreshing = MutableLiveData(false)
-    val showRefreshingFailedState = SingleLiveEvent<Unit>()
+    val showRefreshingFailedState = SingleLiveEvent<ErrorHolder>()
     val showUserInfo = MutableLiveData<Profile>()
     val showFeed = MutableLiveData<List<FeedItem>>()
     val showEmptyFeedState = MutableLiveData<Boolean>()
     val showFeedErrorState = MutableLiveData<Boolean>()
     val openLogin = SingleLiveEvent<Nothing>()
     val showLogoutFailed = SingleLiveEvent<Nothing>()
-    val showErrorState = MutableLiveData<Boolean>()
+    val showErrorState = MutableLiveData<ErrorHolder>()
     val showLoadMoreFeed = MutableLiveData(false)
     val showLoadMoreError = MutableLiveData<Boolean>()
     val showOfflineModeMessage = SingleLiveEvent<Unit>()
@@ -45,7 +45,7 @@ class ProfileViewModel(
 
     fun loadProfileContent(isRefreshing: Boolean = false) {
         viewModelScope.launch {
-            showErrorState.value = false
+            showErrorState.value = null
             if (isRefreshing.not()) {
                 showProgress.value = true
             }
@@ -101,7 +101,7 @@ class ProfileViewModel(
     fun refreshContent() {
         if (networkStateProvider.isNetworkAvailable().not()) {
             showRefreshing.value = false
-            showRefreshingFailedState.call()
+            showRefreshingFailedState.value = ErrorHolder.NetworkError()
             return
         }
         if (showLoadMoreFeed.value == true) {
@@ -134,7 +134,7 @@ class ProfileViewModel(
             }
             is Result.Error -> {
                 if (isRefreshing.not()) {
-                    showErrorState.value = true
+                    showErrorState.value = ErrorHolder.GeneralError()
                 }
             }
         }
@@ -156,7 +156,7 @@ class ProfileViewModel(
                     if (isRefreshing.not()) {
                         showEmptyFeedState.value = true
                     } else {
-                        showRefreshingFailedState.call()
+                        showRefreshingFailedState.value = ErrorHolder.RefreshingError()
                     }
                 }
             }
@@ -164,7 +164,7 @@ class ProfileViewModel(
                 if (isRefreshing.not()) {
                     showFeedErrorState.value = true
                 } else {
-                    showRefreshingFailedState.call()
+                    showRefreshingFailedState.value = ErrorHolder.RefreshingError()
                 }
             }
         }

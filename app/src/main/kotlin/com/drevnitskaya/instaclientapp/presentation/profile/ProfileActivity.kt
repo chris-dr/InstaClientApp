@@ -21,6 +21,7 @@ import com.drevnitskaya.instaclientapp.presentation.profile.adapter.PaginationLi
 import kotlinx.android.synthetic.main.activity_profile.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import androidx.core.content.ContextCompat
+import com.drevnitskaya.instaclientapp.presentation.profile.adapter.VIEW_TYPE_FEED_ITEM
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -59,7 +60,7 @@ class ProfileActivity : AppCompatActivity() {
             glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (adapterFeed.getItemViewType(position)) {
-                        FeedAdapter.FeetItemType.FEED_ITEM.value -> 1
+                        VIEW_TYPE_FEED_ITEM -> 1
                         else -> 2
                     }
                 }
@@ -92,10 +93,10 @@ class ProfileActivity : AppCompatActivity() {
             showRefreshing.observe(this@ProfileActivity, Observer { shouldShow ->
                 profileRefreshLayout.isRefreshing = shouldShow
             })
-            showRefreshingFailedState.observe(this@ProfileActivity, Observer {
+            showRefreshingFailedState.observe(this@ProfileActivity, Observer { error ->
                 showSnackbar(
                     profileRoot,
-                    getString(R.string.profile_refreshingError),
+                    getString(error.errorMsgRes),
                     getString(R.string.profile_retry),
                     actionListener = {
                         viewModel.refreshContent()
@@ -133,9 +134,14 @@ class ProfileActivity : AppCompatActivity() {
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
             })
-            showErrorState.observe(this@ProfileActivity, Observer { shouldShow ->
-                TransitionManager.beginDelayedTransition(profileRoot)
-                profileErrorState.visibility = if (shouldShow) View.VISIBLE else View.GONE
+            showErrorState.observe(this@ProfileActivity, Observer { error ->
+                profileErrorState.visibility = if (error != null) {
+                    TransitionManager.beginDelayedTransition(profileRoot)
+                    profileErrorState.setErrorMessage(error.errorMsgRes)
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
             })
             showLogoutFailed.observe(this@ProfileActivity, Observer {
                 showSnackbar(profileRoot, getString(R.string.profile_logoutFailed))

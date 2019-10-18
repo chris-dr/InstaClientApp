@@ -12,7 +12,7 @@
     <string name="profile_logoutFailed">Logout failed</string>
     <string name="errorState_errorMsg">Something went wrong.\nPlease try to load the page again</string>
     <string name="errorState_reload">Reload</string>
-    <string name="itemFeed_errorMessage">Some error occurred</string>
+    <string name="itemFeed_errorMessage">Can\'t load more photos</string>
     <string name="itemFeed_retry">Retry</string>
     <string name="profile_offlineMode">Offline mode: feed fetching has failed</string>
     <string name="profile_emptyFeed">Your recent Instagram media will be displayed here. Pull to refresh once you add it</string>
