@@ -19,4 +19,9 @@
     <string name="profile_loadFeedError">Feed fetching has failed. Pull down to try again</string>
     <string name="profile_refreshingError">The feed hasn\'t been refreshed</string>
     <string name="profile_retry">Retry</string>
+    <string name="profile_logoutMsg">Are you sure that you want to leave the app?</string>
+    <string name="shared_yes">Yes</string>
+    <string name="shared_no">No</string>
+    <string name="shared_noNetworkConnMsg">Please check your Network connection</string>
+    <string name="shared_generalErrorMsg">Something went wrong.\nPlease try to load the page again</string>
 </resources>

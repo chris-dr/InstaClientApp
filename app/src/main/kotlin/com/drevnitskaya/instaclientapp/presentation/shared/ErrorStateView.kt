@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.StringRes
 import com.drevnitskaya.instaclientapp.R
 import kotlinx.android.synthetic.main.shared_error_state_view.view.*
 
@@ -28,5 +29,9 @@ class ErrorStateView : FrameLayout {
         errorStateRetryButton.setOnClickListener {
             onRetryClicked?.invoke()
         }
+    }
+
+    fun setErrorMessage(@StringRes errorMsgRes: Int) {
+        errorStateErrorMsg.setText(errorMsgRes)
     }
 }

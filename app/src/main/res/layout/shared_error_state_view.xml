@@ -8,26 +8,25 @@
 
     <ImageView
         android:id="@+id/errorStateImg"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
+        android:src="@drawable/ic_error"
         android:tint="@color/beautyBush"
         app:layout_constraintBottom_toTopOf="@+id/errorStateErrorMsg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_error" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/errorStateErrorMsg"
-        style="@style/Subtitle1.WoodyBrownText"
+        style="@style/Body1.WoodyBrownText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="36dp"
         android:gravity="center"
-        android:text="@string/errorState_errorMsg"
         app:layout_constraintBottom_toTopOf="@+id/errorStateRetryGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,7 +37,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.60" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/errorStateRetryButton"

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.transition.TransitionManager
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
@@ -19,6 +20,7 @@ import com.drevnitskaya.instaclientapp.presentation.profile.adapter.FeedAdapter
 import com.drevnitskaya.instaclientapp.presentation.profile.adapter.PaginationListener
 import kotlinx.android.synthetic.main.activity_profile.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import androidx.core.content.ContextCompat
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -78,7 +80,7 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.refreshContent()
         }
         profileLogout.setOnClickListener {
-            viewModel.logout()
+            confirmLogoutPopup().show()
         }
     }
 
@@ -162,5 +164,31 @@ class ProfileActivity : AppCompatActivity() {
         } else {
             View.GONE
         }
+    }
+
+    private fun confirmLogoutPopup(): AlertDialog {
+        return AlertDialog.Builder(this)
+            .setMessage(R.string.profile_logoutMsg)
+            .setPositiveButton(R.string.shared_yes) { dialog, _ ->
+                dialog.dismiss()
+                viewModel.logout()
+            }.setNegativeButton(R.string.shared_no) { dialog, _ ->
+                dialog.dismiss()
+            }.create().apply {
+                setOnShowListener {
+                    getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(
+                        ContextCompat.getColor(
+                            this@ProfileActivity,
+                            R.color.woodyBrown
+                        )
+                    )
+                    getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(
+                        ContextCompat.getColor(
+                            this@ProfileActivity,
+                            R.color.woodyBrown
+                        )
+                    )
+                }
+            }
     }
 }

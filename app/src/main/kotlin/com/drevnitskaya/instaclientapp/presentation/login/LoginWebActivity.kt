@@ -54,8 +54,9 @@ class LoginWebActivity : AppCompatActivity() {
                 TransitionManager.beginDelayedTransition(loginWebRoot)
                 loginWebView.visibility = if (shouldShow) View.VISIBLE else View.GONE
             })
-            showErrorState.observe(this@LoginWebActivity, Observer { shouldShow ->
-                loginWebErrorState.visibility = if (shouldShow) {
+            showErrorState.observe(this@LoginWebActivity, Observer { error ->
+                loginWebErrorState.visibility = if (error != null) {
+                    loginWebErrorState.setErrorMessage(error.errorMsgRes)
                     TransitionManager.beginDelayedTransition(loginWebRoot)
                     View.VISIBLE
                 } else {
