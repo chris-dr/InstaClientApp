@@ -13,6 +13,8 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.drevnitskaya.instaclientapp.R
+import com.drevnitskaya.instaclientapp.extensions.revealActivity
+import com.drevnitskaya.instaclientapp.extensions.startUnRevealActivity
 import com.drevnitskaya.instaclientapp.framework.api.AUTH_REDIRECT_URL
 import com.drevnitskaya.instaclientapp.presentation.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_web_login.*
@@ -32,6 +34,7 @@ class LoginWebActivity : AppCompatActivity() {
         setContentView(R.layout.activity_web_login)
         initViewModel()
         initViews()
+        revealActivity(savedInstanceState, loginWebRoot)
     }
 
     override fun onBackPressed() {
@@ -40,6 +43,7 @@ class LoginWebActivity : AppCompatActivity() {
             return
         }
         super.onBackPressed()
+        startUnRevealActivity(loginWebRoot)
     }
 
     private fun initViewModel() {

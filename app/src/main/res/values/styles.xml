@@ -31,6 +31,11 @@
         <item name="android:navigationBarColor">#BFFFFFFF</item>
     </style>
 
+    <style name="InstaClientTheme.WebLoginTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="Widget.MaterialComponents.Snackbar.BeautyBush">
         <item name="android:background">@color/bridesmaid95Percent</item>
     </style>

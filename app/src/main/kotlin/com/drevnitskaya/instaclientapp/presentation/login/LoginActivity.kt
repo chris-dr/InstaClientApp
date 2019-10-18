@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.updatePadding
 import com.drevnitskaya.instaclientapp.R
+import com.drevnitskaya.instaclientapp.extensions.makeRevealAnimation
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -38,7 +40,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
-            startActivity(LoginWebActivity.getStartIntent(this))
+            val intent = LoginWebActivity.getStartIntent(this)
+            val options = makeRevealAnimation(loginButton, intent)
+            ActivityCompat.startActivity(this, intent, options.toBundle())
         }
     }
 }

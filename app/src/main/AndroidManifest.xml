@@ -31,7 +31,7 @@
             android:name=".presentation.login.LoginWebActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/InstaClientTheme" />
+            android:theme="@style/InstaClientTheme.WebLoginTheme" />
         <activity
             android:name=".presentation.profile.ProfileActivity"
             android:screenOrientation="portrait"
