@@ -31,9 +31,6 @@ class LoginActivity : AppCompatActivity() {
         loginRoot.setOnApplyWindowInsetsListener { _, windowInsets ->
             windowInsets
         }
-        loginBackgroundImg.setOnApplyWindowInsetsListener { _, windowInsets ->
-            windowInsets
-        }
         loginForm.setOnApplyWindowInsetsListener { view, windowInsets ->
             view.updatePadding(bottom = windowInsets.systemWindowInsetBottom)
             windowInsets
