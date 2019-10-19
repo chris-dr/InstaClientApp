@@ -2,6 +2,7 @@ package com.drevnitskaya.instaclientapp.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.drevnitskaya.instaclientapp.data.Result
+import com.drevnitskaya.instaclientapp.data.entities.ErrorHolder
 import com.drevnitskaya.instaclientapp.domain.auth.ComposeAuthUrlUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.GetAccessTokenUseCase
 import com.drevnitskaya.instaclientapp.domain.auth.ParseAuthCodeUseCase
@@ -58,7 +59,7 @@ class LoginWebViewModelTest {
         val showLoginFormValues = showLoginFormTest.observedValues
         assertTrue(showLoginFormValues.size == 1 && showLoginFormValues[0] == false)
         val showErrorStateValues = showErrorStateTest.observedValues
-        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] == true)
+        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] is ErrorHolder.NetworkError)
     }
 
     @Test
@@ -124,7 +125,7 @@ class LoginWebViewModelTest {
 
         val showErrorStateTest = viewModel.showErrorState.testObserver()
         val showErrorStateValues = showErrorStateTest.observedValues
-        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] == true)
+        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] is ErrorHolder.GeneralError)
     }
 
     @Test
@@ -147,7 +148,7 @@ class LoginWebViewModelTest {
 
         val showErrorStateTest = viewModel.showErrorState.testObserver()
         val showErrorStateValues = showErrorStateTest.observedValues
-        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] == true)
+        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] is ErrorHolder.GeneralError)
     }
 
     @Test
@@ -159,7 +160,7 @@ class LoginWebViewModelTest {
 
         val showErrorStateTest = viewModel.showErrorState.testObserver()
         val showErrorStateValues = showErrorStateTest.observedValues
-        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] == true)
+        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] is ErrorHolder.NetworkError)
     }
 
 
@@ -173,7 +174,7 @@ class LoginWebViewModelTest {
 
         val showErrorStateTest = viewModel.showErrorState.testObserver()
         val showErrorStateValues = showErrorStateTest.observedValues
-        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] == false)
+        assertTrue(showErrorStateValues.size == 1 && showErrorStateValues[0] == null)
 
         val showProgressTest = viewModel.showProgress.testObserver()
         val showProgressValues = showProgressTest.observedValues
