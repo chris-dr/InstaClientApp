@@ -16,5 +16,3 @@ Sample app to demonstrate my coding skills.
 
 ### The app's demo video you can find here: 
 http://bit.ly/2MCzFaV
-
-[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](https://youtu.be/T-D1KVIuvjA)
